@@ -1,0 +1,26 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #212121;
+    overflow-x: hidden;
+}
+
+
+
+section {
+    scroll-margin-top: 90px;
+    min-height: 100vh;
+    padding: clamp(60px, 8vw, 120px) clamp(16px, 6vw, 120px);
+}
+
