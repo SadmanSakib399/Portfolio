@@ -1,7 +1,7 @@
 // SIDEBAR BUTTON
-const menuBtn = document.getElementById("menu-btn");
+const toggle = document.getElementById("menu-toggle");
 const sideNav = document.getElementById("side-nav");
 
-menuBtn.addEventListener("click", () => {
-    sideNav.classList.toggle("active");
+toggle.addEventListener("change", () => {
+    sideNav.classList.toggle("active", toggle.checked);
 });

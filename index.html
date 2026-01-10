@@ -22,7 +22,17 @@
 
     <!-- ========== NAVBAR ========== -->
     <!-- LEFT TOGGLE BUTTON -->
-    <button id="menu-btn">☰</button>
+    <label class="hamburger" id="menu-btn">
+        <input type="checkbox" id="menu-toggle">
+        <svg viewBox="0 0 32 32">
+            <path class="line line-top-bottom"
+                d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22">
+            </path>
+            <path class="line" d="M7 16 27 16"></path>
+        </svg>
+    </label>
+
+
     <!-- LEFT SIDEBAR NAV -->
     <aside id="side-nav">
         <a href="#">Blogs</a>
@@ -31,7 +41,7 @@
     </aside>
 
     <!-- RIGHT NAVBAR -->
-    <nav class="top-nav btn">
+    <nav class="top-nav top_nav_bg">
         <div class="nav-inner">
             <a href="#home" class="active">Home</a>
             <a href="#about" class="">About</a>
