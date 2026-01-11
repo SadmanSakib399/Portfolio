@@ -1,24 +1,12 @@
 // ===============================
-// SIDEBAR TOGGLE (USE CHECKBOX NATIVELY)
+// SIDEBAR TOGGLE (NATIVE CHECKBOX)
 // ===============================
 const toggle = document.getElementById("menu-toggle");
 const sideNav = document.getElementById("side-nav");
 
 if (toggle && sideNav) {
     toggle.addEventListener("change", () => {
-        if (toggle.checked) {
-            sideNav.classList.add("active");
-        } else {
-            sideNav.classList.remove("active");
-        }
-    });
-
-    toggle.addEventListener("click", (e) => {
-        e.stopPropagation();
-    });
-
-    sideNav.addEventListener("click", (e) => {
-        e.stopPropagation();
+        sideNav.classList.toggle("active", toggle.checked);
     });
 }
 
@@ -57,7 +45,6 @@ const radioContainer = document.querySelector(".radio-container");
 const radios = document.querySelectorAll(".radio-container input[type='radio']");
 
 if (radioContainer && radios.length) {
-
     let activeRadio = document.querySelector(".radio-container input:checked");
 
     radios.forEach(radio => {
@@ -72,7 +59,6 @@ if (radioContainer && radios.length) {
         // Click → navigate
         label.addEventListener("click", (e) => {
             e.preventDefault();
-            e.stopPropagation();
 
             activeRadio = radio;
             radio.checked = true;
@@ -100,4 +86,29 @@ if (radioContainer && radios.length) {
     });
 }
 
-// ========
+// ===============================
+// OUTSIDE CLICK CLOSE
+// ===============================
+document.addEventListener("click", (e) => {
+    if (!toggle || !sideNav) return;
+
+    const clickedInsideSidebar = sideNav.contains(e.target);
+    const clickedToggle = e.target.closest(".hamburger");
+
+    if (clickedInsideSidebar || clickedToggle) return;
+
+    if (toggle.checked) {
+        toggle.checked = false;
+        sideNav.classList.remove("active");
+    }
+});
+
+// ===============================
+// ESC CLOSE
+// ===============================
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && toggle.checked) {
+        toggle.checked = false;
+        sideNav.classList.remove("active");
+    }
+});
