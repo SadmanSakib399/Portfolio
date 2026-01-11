@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 history.pushState({}, "", "?page=" + url);
             }
 
-            if (!isInitial) window.scrollTo(0, 0);
+            if (addToHistory) window.scrollTo(0, 0);
 
             const page = url.split("/").pop();
 
@@ -66,4 +66,3 @@ document.addEventListener("DOMContentLoaded", () => {
     loadPage(page, false);
 
 });
-
