@@ -62,20 +62,34 @@ function initNavbar() {
 
         link.addEventListener("click", (e) => {
             const hash = link.getAttribute("href");
-
             if (!hash || !hash.startsWith("#")) return;
 
             const target = document.querySelector(hash);
-            if (!target) {
-                e.preventDefault();
-                return;
-            }
+            if (!target) return;
 
+            // ✅ STOP native anchor jump
+            e.preventDefault();
+
+            // Set active immediately
             navLinks.forEach(l => l.classList.remove("active"));
             link.classList.add("active");
             activeLink = link;
             moveGlider(activeLink);
+
+            // ✅ Controlled scroll with offset
+            const navOffset = document.querySelector(".top-nav")?.offsetHeight || 80;
+
+            const y =
+                target.getBoundingClientRect().top +
+                window.pageYOffset -
+                navOffset;
+
+            window.scrollTo({
+                top: y,
+                behavior: "smooth"
+            });
         });
+
     });
 
     navInner.addEventListener("mouseleave", () => {

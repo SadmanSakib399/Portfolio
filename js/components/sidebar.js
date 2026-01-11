@@ -30,7 +30,7 @@ const pageMap = {
     "thoughts.html": "radio-thoughts"
 };
 
-window.syncSidebarWithPage = function(pathname) {
+window.syncSidebarWithPage = function (pathname) {
     const currentPage = pathname.split("/").pop() || "portfolio.html";
     const activeRadioId = pageMap[currentPage];
 
@@ -74,10 +74,13 @@ if (radioContainer && radios.length) {
             const target = routes[radio.id];
             if (!target) return;
 
-            document.body.classList.add("fade-out");
+            const app = document.getElementById("app-content");
+            if (!app) return;
+
+            app.classList.add("fade-out");
 
             setTimeout(() => {
-                document.body.classList.remove("fade-out");
+                app.classList.remove("fade-out");
                 loadPage(target);
             }, 300);
         });
