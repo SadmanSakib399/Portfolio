@@ -1,3 +1,17 @@
+#app-content {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#app-content.page-exit {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+#app-content.page-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
 /* ===== RESET ===== */
 * {
     margin: 0;

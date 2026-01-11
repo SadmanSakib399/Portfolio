@@ -75,7 +75,7 @@ if (radioContainer && radios.length) {
             document.body.classList.add("fade-out");
 
             setTimeout(() => {
-                window.location.href = target;
+                loadPage(target);
             }, 400);
         });
     });
