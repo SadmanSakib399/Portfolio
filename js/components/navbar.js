@@ -77,7 +77,7 @@ function initNavbar() {
             moveGlider(activeLink);
 
             // ✅ Controlled scroll with offset
-            const navOffset = document.querySelector(".top-nav")?.offsetHeight || 80;
+            const navOffset = nav?.offsetHeight || 80;
 
             const y =
                 target.getBoundingClientRect().top +
@@ -150,35 +150,6 @@ window.initNavbar = initNavbar;
 
 // Init on first load
 document.addEventListener("DOMContentLoaded", initNavbar);
-
-window.setTopNavActiveByPage = function (page) {
-    const map = {
-        "portfolio.html": "#home",
-        "blogs.html": null,
-        "gallery.html": null,
-        "thoughts.html": null
-    };
-
-    const selector = map[page];
-    if (!selector) return;
-
-    const link = document.querySelector(`.nav-inner a[href="${selector}"]`);
-    if (!link) return;
-
-    const navLinks = document.querySelectorAll(".nav-inner a");
-    navLinks.forEach(l => l.classList.remove("active"));
-    link.classList.add("active");
-
-    const glider = document.querySelector(".nav-glider");
-    const navInner = document.querySelector(".nav-inner");
-    if (!glider || !navInner) return;
-
-    const linkRect = link.getBoundingClientRect();
-    const parentRect = navInner.getBoundingClientRect();
-
-    glider.style.width = `${linkRect.width}px`;
-    glider.style.left = `${linkRect.left - parentRect.left}px`;
-};
 
 
 window.renderTopNav = function (links) {
