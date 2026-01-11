@@ -1,3 +1,44 @@
+window.onPageChange = function (page) {
+
+    if (!window.renderTopNav) return;
+
+    // ===== PORTFOLIO / HOME =====
+    if (page === "portfolio.html") {
+        renderTopNav([
+            { label: "Home", href: "#home" },
+            { label: "About", href: "#about" },
+            { label: "Skills", href: "#skills" },
+            { label: "Projects", href: "#projects" }
+        ]);
+        return;
+    }
+
+    // ===== BLOGS =====
+    if (page === "blogs.html") {
+        renderTopNav([
+            { label: "Blogs", href: "#" }
+        ]);
+        return;
+    }
+
+    // ===== GALLERY =====
+    if (page === "gallery.html") {
+        renderTopNav([
+            { label: "Gallery", href: "#" }
+        ]);
+        return;
+    }
+
+    // ===== THOUGHTS =====
+    if (page === "thoughts.html") {
+        renderTopNav([
+            { label: "Thoughts", href: "#" }
+        ]);
+        return;
+    }
+};
+
+
 document.body.classList.add("loaded");
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -22,12 +63,16 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 300);
 
             if (addToHistory) {
-                history.pushState({}, "", url);
+                history.pushState({}, "", "?page=" + url);
             }
 
             window.scrollTo(0, 0);
 
             const page = url.split("/").pop();
+            if (window.onPageChange) {
+                window.onPageChange(page);
+            }
+
 
             // ✅ ONLY sync state, NO reinit
             if (window.setTopNavActiveByPage) {
@@ -46,9 +91,11 @@ document.addEventListener("DOMContentLoaded", () => {
     window.loadPage = loadPage;
 
     window.addEventListener("popstate", () => {
-        const path = location.pathname.split("/").pop() || "portfolio.html";
-        loadPage(path, false);
+        const params = new URLSearchParams(window.location.search);
+        const page = params.get("page") || "portfolio.html";
+        loadPage(page, false);
     });
+
 
     document.addEventListener("click", (e) => {
         const link = e.target.closest("a");
@@ -61,10 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
         loadPage(href);
     });
 
-    const initial = location.pathname.split("/").pop();
-    if (!initial || initial === "index.html") {
-        loadPage("portfolio.html", false);
-    } else {
-        loadPage(initial, false);
-    }
+    const params = new URLSearchParams(window.location.search);
+    const page = params.get("page") || "portfolio.html";
+    loadPage(page, false);
+
 });
