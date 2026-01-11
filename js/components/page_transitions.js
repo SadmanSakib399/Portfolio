@@ -1,42 +1,13 @@
 window.onPageChange = function (page) {
-
-    if (!window.renderTopNav) return;
-
-    // ===== PORTFOLIO / HOME =====
-    if (page === "portfolio.html") {
-        renderTopNav([
-            { label: "Home", href: "#home" },
-            { label: "About", href: "#about" },
-            { label: "Skills", href: "#skills" },
-            { label: "Projects", href: "#projects" }
-        ]);
-        return;
-    }
-
-    // ===== BLOGS =====
-    if (page === "blogs.html") {
-        renderTopNav([
-            { label: "Blogs", href: "#" }
-        ]);
-        return;
-    }
-
-    // ===== GALLERY =====
-    if (page === "gallery.html") {
-        renderTopNav([
-            { label: "Gallery", href: "#" }
-        ]);
-        return;
-    }
-
-    // ===== THOUGHTS =====
-    if (page === "thoughts.html") {
-        renderTopNav([
-            { label: "Thoughts", href: "#" }
-        ]);
-        return;
+    // TEMPORARY BRIDGE — logic moved later
+    if (window.__onSpaPageChange) {
+        window.__onSpaPageChange({
+            page,
+            isInitial: false
+        });
     }
 };
+
 
 
 document.body.classList.add("loaded");
@@ -69,16 +40,15 @@ document.addEventListener("DOMContentLoaded", () => {
             window.scrollTo(0, 0);
 
             const page = url.split("/").pop();
-            if (window.onPageChange) {
-                window.onPageChange(page);
-            }
 
+            if (window.__onSpaPageChange) {
+                window.__onSpaPageChange({
+                    page,
+                    isInitial: !addToHistory
+                });
+            }
 
             // ✅ ONLY sync state, NO reinit
-            if (window.setTopNavActiveByPage) {
-                window.setTopNavActiveByPage(page);
-            }
-
             if (window.syncSidebarWithPage) {
                 window.syncSidebarWithPage(url);
             }
@@ -113,3 +83,38 @@ document.addEventListener("DOMContentLoaded", () => {
     loadPage(page, false);
 
 });
+
+
+
+// ===============================
+// SPA LIFECYCLE
+// ===============================
+window.__onSpaPageChange = function ({ page, isInitial }) {
+
+    // ===== TOP NAV CONFIG =====
+    if (window.renderTopNav) {
+
+        if (page === "portfolio.html") {
+            renderTopNav([
+                { label: "Home", href: "#home" },
+                { label: "About", href: "#about" },
+                { label: "Skills", href: "#skills" },
+                { label: "Projects", href: "#projects" }
+            ]);
+        }
+
+        if (page === "blogs.html") {
+            renderTopNav([{ label: "Blogs", href: "#" }]);
+        }
+
+        if (page === "gallery.html") {
+            renderTopNav([{ label: "Gallery", href: "#" }]);
+        }
+
+        if (page === "thoughts.html") {
+            renderTopNav([{ label: "Thoughts", href: "#" }]);
+        }
+    }
+
+};
+
