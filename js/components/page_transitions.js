@@ -1,34 +1,19 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.body.classList.add("loaded");
 
+document.addEventListener("DOMContentLoaded", () => {
     const appContent = document.getElementById("app-content");
-    if (!appContent) {
-        console.warn("No #app-content found.");
-        return;
-    }
+    if (!appContent) return;
 
     async function loadPage(url, addToHistory = true) {
-        // Animate out
-        appContent.classList.add("page-exit");
-
-        await new Promise(res => setTimeout(res, 300));
-
         try {
+            appContent.classList.add("page-exit");
+            await new Promise(res => setTimeout(res, 300));
+
             const res = await fetch(url);
             const html = await res.text();
 
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, "text/html");
-            const newContent = doc.querySelector("#app-content");
+            appContent.innerHTML = html;
 
-            if (!newContent) {
-                window.location.href = url;
-                return;
-            }
-
-            // Swap content
-            appContent.innerHTML = newContent.innerHTML;
-
-            // Animate in
             appContent.classList.remove("page-exit");
             appContent.classList.add("page-enter");
 
@@ -42,30 +27,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
             window.scrollTo(0, 0);
 
+            const page = url.split("/").pop();
+
+            // ✅ ONLY sync state, NO reinit
+            if (window.setTopNavActiveByPage) {
+                window.setTopNavActiveByPage(page);
+            }
+
+            if (window.syncSidebarWithPage) {
+                window.syncSidebarWithPage(url);
+            }
+
         } catch (err) {
-            console.error("SPA load error:", err);
-            window.location.href = url;
+            console.error("SPA error:", err);
         }
     }
 
-    // Back / forward
+    window.loadPage = loadPage;
+
     window.addEventListener("popstate", () => {
-        loadPage(location.pathname, false);
+        const path = location.pathname.split("/").pop() || "portfolio.html";
+        loadPage(path, false);
     });
 
-    // Intercept <a> links
     document.addEventListener("click", (e) => {
         const link = e.target.closest("a");
         if (!link) return;
 
         const href = link.getAttribute("href");
-
         if (!href || href.startsWith("#") || href.startsWith("http")) return;
 
         e.preventDefault();
         loadPage(href);
     });
 
-    // Make global for sidebar.js
-    window.loadPage = loadPage;
+    const initial = location.pathname.split("/").pop();
+    if (!initial || initial === "index.html") {
+        loadPage("portfolio.html", false);
+    } else {
+        loadPage(initial, false);
+    }
 });

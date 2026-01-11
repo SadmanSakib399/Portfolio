@@ -11,10 +11,10 @@ if (toggle && sideNav) {
 }
 
 // ===============================
-// ROUTES
+// ROUTES (SPA PARTIALS)
 // ===============================
 const routes = {
-    "radio-portfolio": "index.html",
+    "radio-portfolio": "portfolio.html",
     "radio-blogs": "blogs.html",
     "radio-gallery": "gallery.html",
     "radio-thoughts": "thoughts.html"
@@ -24,18 +24,20 @@ const routes = {
 // AUTO-CHECK RADIO BASED ON PAGE
 // ===============================
 const pageMap = {
-    "index.html": "radio-portfolio",
+    "portfolio.html": "radio-portfolio",
     "blogs.html": "radio-blogs",
     "gallery.html": "radio-gallery",
     "thoughts.html": "radio-thoughts"
 };
 
-const currentPage = location.pathname.split("/").pop() || "index.html";
-const activeRadioId = pageMap[currentPage];
+window.syncSidebarWithPage = function(pathname) {
+    const currentPage = pathname.split("/").pop() || "portfolio.html";
+    const activeRadioId = pageMap[currentPage];
 
-if (activeRadioId) {
-    const radio = document.getElementById(activeRadioId);
-    if (radio) radio.checked = true;
+    if (activeRadioId) {
+        const radio = document.getElementById(activeRadioId);
+        if (radio) radio.checked = true;
+    }
 }
 
 // ===============================
@@ -56,7 +58,7 @@ if (radioContainer && radios.length) {
             radio.checked = true;
         });
 
-        // Click → navigate
+        // Click → SPA navigate
         label.addEventListener("click", (e) => {
             e.preventDefault();
 
@@ -75,8 +77,9 @@ if (radioContainer && radios.length) {
             document.body.classList.add("fade-out");
 
             setTimeout(() => {
+                document.body.classList.remove("fade-out");
                 loadPage(target);
-            }, 400);
+            }, 300);
         });
     });
 
@@ -111,4 +114,15 @@ document.addEventListener("keydown", (e) => {
         toggle.checked = false;
         sideNav.classList.remove("active");
     }
+});
+
+// ===============================
+// SYNC ON LOAD + BACK/FORWARD
+// ===============================
+window.addEventListener("popstate", () => {
+    syncSidebarWithPage(location.pathname);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    syncSidebarWithPage(location.pathname);
 });
