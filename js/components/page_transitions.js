@@ -48,11 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             }
 
-            // ✅ ONLY sync state, NO reinit
-            if (window.syncSidebarWithPage) {
-                window.syncSidebarWithPage(url);
-            }
-
         } catch (err) {
             console.error("SPA error:", err);
         }
@@ -115,6 +110,12 @@ window.__onSpaPageChange = function ({ page, isInitial }) {
             renderTopNav([{ label: "Thoughts", href: "#" }]);
         }
     }
+
+        // ===== SIDEBAR SYNC =====
+    if (window.syncSidebarWithPage) {
+        window.syncSidebarWithPage(page);
+    }
+
 
 };
 
