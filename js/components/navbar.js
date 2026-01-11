@@ -30,6 +30,12 @@ function initNavbar() {
     if (!navLinks.length || !glider || !navInner) return;
 
     let activeLink = document.querySelector(".nav-inner a.active");
+    if (!activeLink) {
+        activeLink = navLinks[0];
+        if (activeLink) activeLink.classList.add("active");
+    }
+
+
 
     function moveGlider(el, animate = true) {
         if (!el) return;
@@ -92,6 +98,9 @@ function initNavbar() {
         const newActive = document.querySelector(
             `.nav-inner a[href="#${currentSectionId}"]`
         );
+
+        if (!newActive) return;
+
 
         if (newActive && newActive !== activeLink) {
             navLinks.forEach(l => l.classList.remove("active"));
