@@ -118,14 +118,3 @@ document.addEventListener("keydown", (e) => {
         sideNav.classList.remove("active");
     }
 });
-
-// ===============================
-// SYNC ON LOAD + BACK/FORWARD
-// ===============================
-window.addEventListener("popstate", () => {
-    syncSidebarWithPage(location.pathname);
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    syncSidebarWithPage(location.pathname);
-});
