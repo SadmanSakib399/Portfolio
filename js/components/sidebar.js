@@ -1,12 +1,24 @@
 // ===============================
-// SIDEBAR TOGGLE
+// SIDEBAR TOGGLE (USE CHECKBOX NATIVELY)
 // ===============================
 const toggle = document.getElementById("menu-toggle");
 const sideNav = document.getElementById("side-nav");
 
 if (toggle && sideNav) {
     toggle.addEventListener("change", () => {
-        sideNav.classList.toggle("active", toggle.checked);
+        if (toggle.checked) {
+            sideNav.classList.add("active");
+        } else {
+            sideNav.classList.remove("active");
+        }
+    });
+
+    toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+    });
+
+    sideNav.addEventListener("click", (e) => {
+        e.stopPropagation();
     });
 }
 
@@ -52,17 +64,24 @@ if (radioContainer && radios.length) {
         const label = radio.nextElementSibling;
         if (!label) return;
 
-        // HOVER → MOVE GLIDER ONLY
+        // Hover → move glider only
         label.addEventListener("mouseenter", () => {
             radio.checked = true;
         });
 
-        // CLICK → NAVIGATE
+        // Click → navigate
         label.addEventListener("click", (e) => {
             e.preventDefault();
+            e.stopPropagation();
 
             activeRadio = radio;
             radio.checked = true;
+
+            // Close sidebar
+            if (toggle && sideNav) {
+                toggle.checked = false;
+                sideNav.classList.remove("active");
+            }
 
             const target = routes[radio.id];
             if (!target) return;
@@ -75,33 +94,10 @@ if (radioContainer && radios.length) {
         });
     });
 
-    // MOUSE LEAVE → RETURN TO ACTIVE
+    // Mouse leave → return to active
     radioContainer.addEventListener("mouseleave", () => {
         if (activeRadio) activeRadio.checked = true;
     });
 }
 
-// ===============================
-// AUTO-CLOSE SIDEBAR
-// ===============================
-
-// Close on outside click
-document.addEventListener("click", (e) => {
-    if (!sideNav || !toggle) return;
-
-    const clickedInsideSidebar = sideNav.contains(e.target);
-    const clickedToggle = toggle.contains(e.target);
-
-    if (!clickedInsideSidebar && !clickedToggle && sideNav.classList.contains("active")) {
-        toggle.checked = false;
-        sideNav.classList.remove("active");
-    }
-});
-
-// Close on ESC key
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && sideNav.classList.contains("active")) {
-        toggle.checked = false;
-        sideNav.classList.remove("active");
-    }
-});
+// ========
