@@ -210,3 +210,10 @@
 .radio-container input:nth-of-type(10):checked~.glider-container .glider {
     transform: translateY(900%);
 }
+
+.radio-container .glider-container,
+.radio-container .glider-container *,
+.radio-container .glider-container *::before,
+.radio-container .glider-container *::after {
+    pointer-events: none;
+}
