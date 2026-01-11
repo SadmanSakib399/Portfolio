@@ -10,6 +10,8 @@ html {
 }
 
 body {
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease;
     font-family: Arial, sans-serif;
     line-height: 1.6;
     background-color: #212121;
@@ -17,12 +19,18 @@ body {
 
 }
 
+body.loaded {
+    opacity: 1;
+}
 
+body.fade-out {
+    opacity: 0;
+    transform: scale(0.96);
+    filter: blur(8px);
+}
 
 section {
     scroll-margin-top: 90px;
     min-height: 100vh;
     padding: clamp(60px, 8vw, 120px) clamp(16px, 6vw, 120px);
 }
-
-
