@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sadman Sakib | Thoughts</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/background.css">
+    <link rel="stylesheet" href="css/thoughts.css"> <!-- Page-specific -->
+</head>
+
+<body class="container">
+
+    <canvas id="smokeCanvas"></canvas>
+    <div class="container"></div>
+
+    <!-- LEFT TOGGLE BUTTON -->
+    <label class="hamburger" id="menu-btn">
+        <input type="checkbox" id="menu-toggle">
+        <svg viewBox="0 0 32 32">
+            <path class="line line-top-bottom"
+                d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22">
+            </path>
+            <path class="line" d="M7 16 27 16"></path>
+        </svg>
+    </label>
+
+    <!-- LEFT SIDEBAR NAV -->
+    <aside id="side-nav">
+        <div class="radio-container">
+
+            <a href="index.html" class="side-link">Portfolio</a>
+            <a href="blogs.html" class="side-link">Blogs</a>
+            <a href="gallery.html" class="side-link">Gallery</a>
+            <a href="thoughts.html" class="side-link active">Thoughts</a>
+
+            <div class="glider-container">
+                <div class="glider"></div>
+            </div>
+
+        </div>
+    </aside>
+
+    <!-- RIGHT NAVBAR -->
+    <nav class="top-nav top_nav_bg">
+        <div class="nav-inner">
+            <span class="page-title">Thoughts</span>
+        </div>
+    </nav>
+
+    <!-- ========== THOUGHTS PAGE CONTENT ========== -->
+    <main id="thoughts-page">
+        <h1>Thoughts</h1>
+        <p>This is where your thoughts, reflections, and writings will live.</p>
+
+        <!-- Example Thought Card -->
+        <div class="thought-card">
+            <h2>Title of Thought</h2>
+            <p>
+                Write your thoughts here. You can make this like a blog, journal, or short reflections.
+            </p>
+            <span class="date">Jan 2026</span>
+        </div>
+    </main>
+
+    <!-- JS -->
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/sidebar.js"></script>
+    <script src="js/components/background.js"></script>
+
+</body>
+
+</html>
