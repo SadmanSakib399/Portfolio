@@ -22,7 +22,6 @@ function initNavbar() {
     // Run once
     handleNavBackground();
 
-
     const navLinks = document.querySelectorAll(".nav-inner a");
     const glider = document.querySelector(".nav-glider");
     const navInner = document.querySelector(".nav-inner");
@@ -35,29 +34,9 @@ function initNavbar() {
         if (activeLink) activeLink.classList.add("active");
     }
 
-
-
-    function moveGlider(el, animate = true) {
-        if (!el) return;
-
-        const linkRect = el.getBoundingClientRect();
-        const parentRect = navInner.getBoundingClientRect();
-
-        glider.style.transition = animate ? "" : "none";
-        glider.style.width = `${linkRect.width}px`;
-        glider.style.left = `${linkRect.left - parentRect.left}px`;
-
-        if (!animate) {
-            requestAnimationFrame(() => {
-                glider.style.transition =
-                    "left 0.45s cubic-bezier(0.37, 1.95, 0.66, 0.56), width 0.45s cubic-bezier(0.37, 1.95, 0.66, 0.56)";
-            });
-        }
-    }
-
     navLinks.forEach(link => {
         link.addEventListener("mouseenter", () => {
-            moveGlider(link);
+            NavbarGlider.move(glider, navInner, link);
         });
 
         link.addEventListener("click", (e) => {
@@ -74,7 +53,7 @@ function initNavbar() {
             navLinks.forEach(l => l.classList.remove("active"));
             link.classList.add("active");
             activeLink = link;
-            moveGlider(activeLink);
+            NavbarGlider.move(glider, navInner, activeLink);
 
             // ✅ Controlled scroll with offset
             const navOffset = nav?.offsetHeight || 80;
@@ -93,7 +72,7 @@ function initNavbar() {
     });
 
     navInner.addEventListener("mouseleave", () => {
-        moveGlider(activeLink);
+        NavbarGlider.move(glider, navInner, activeLink);
     });
 
     // ===== SPA-SAFE SCROLLSPY =====
@@ -120,7 +99,7 @@ function initNavbar() {
             navLinks.forEach(l => l.classList.remove("active"));
             newActive.classList.add("active");
             activeLink = newActive;
-            moveGlider(activeLink);
+            NavbarGlider.move(glider, navInner, activeLink);
         }
     }
 
@@ -130,7 +109,7 @@ function initNavbar() {
 
     // Initial positioning
     setTimeout(() => {
-        moveGlider(activeLink, false);
+        NavbarGlider.move(glider, navInner, activeLink, false);
     }, 50);
 
     // Resize handling
@@ -139,7 +118,7 @@ function initNavbar() {
         window.addEventListener(evt, () => {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(() => {
-                moveGlider(activeLink, false);
+                NavbarGlider.move(glider, navInner, activeLink, false);
             }, 100);
         });
     });
