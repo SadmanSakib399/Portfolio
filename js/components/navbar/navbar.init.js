@@ -7,21 +7,6 @@ function initNavbar() {
     const nav = document.querySelector(".top-nav");
     if (!nav) return;
 
-    function handleNavBackground() {
-        if (window.scrollY > 20) {
-            nav.classList.add("scrolled");
-        } else {
-            nav.classList.remove("scrolled");
-        }
-    }
-
-    window.removeEventListener("scroll", window.__navBgScroll);
-    window.__navBgScroll = handleNavBackground;
-    window.addEventListener("scroll", window.__navBgScroll);
-
-    // Run once
-    handleNavBackground();
-
     const navLinks = document.querySelectorAll(".nav-inner a");
     const glider = document.querySelector(".nav-glider");
     const navInner = document.querySelector(".nav-inner");
@@ -99,5 +84,6 @@ window.initNavbar = initNavbar;
 // Init on first load
 document.addEventListener("DOMContentLoaded", initNavbar);
 
-
-
+if (window.NavbarBackground) {
+    NavbarBackground.init();
+}
