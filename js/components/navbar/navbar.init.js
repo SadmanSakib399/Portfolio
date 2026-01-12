@@ -152,26 +152,4 @@ window.initNavbar = initNavbar;
 document.addEventListener("DOMContentLoaded", initNavbar);
 
 
-window.renderTopNav = function (links) {
-    const navInner = document.querySelector(".nav-inner");
-    if (!navInner) return;
 
-    // Preserve glider
-    const glider = navInner.querySelector(".nav-glider");
-
-    // Remove existing links
-    navInner.querySelectorAll("a").forEach(a => a.remove());
-
-    // Insert new links
-    links.forEach(({ label, href }) => {
-        const a = document.createElement("a");
-        a.textContent = label;
-        a.href = href;
-        navInner.insertBefore(a, glider);
-    });
-
-    // Re-init navbar logic safely
-    if (window.initNavbar) {
-        initNavbar();
-    }
-};

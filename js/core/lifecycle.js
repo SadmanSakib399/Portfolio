@@ -54,10 +54,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // ===== NAVBAR =====
-        if (window.renderTopNav && config.nav) {
-            renderTopNav(config.nav);
+        if (window.NavbarRender && config.nav) {
+            NavbarRender.render(config.nav);
         }
-
+        
         // ===== SIDEBAR =====
         if (config.sidebarRadio) {
             const radio = document.getElementById(config.sidebarRadio);
