@@ -11,16 +11,6 @@ if (toggle && sideNav) {
 }
 
 // ===============================
-// ROUTES (SPA PARTIALS)
-// ===============================
-const routes = {
-    "radio-portfolio": "portfolio.html",
-    "radio-blogs": "blogs.html",
-    "radio-gallery": "gallery.html",
-    "radio-thoughts": "thoughts.html"
-};
-
-// ===============================
 // AUTO-CHECK RADIO BASED ON PAGE
 // ===============================
 const pageMap = {
@@ -29,16 +19,6 @@ const pageMap = {
     "gallery.html": "radio-gallery",
     "thoughts.html": "radio-thoughts"
 };
-
-window.syncSidebarWithPage = function (pathname) {
-    const currentPage = pathname.split("/").pop() || "portfolio.html";
-    const activeRadioId = pageMap[currentPage];
-
-    if (activeRadioId) {
-        const radio = document.getElementById(activeRadioId);
-        if (radio) radio.checked = true;
-    }
-}
 
 // ===============================
 // HOVER GLIDER + CLICK NAVIGATION
@@ -71,7 +51,11 @@ if (radioContainer && radios.length) {
                 sideNav.classList.remove("active");
             }
 
-            const target = routes[radio.id];
+            const entry = Object.values(PAGE_CONFIG).find(p => p.sidebarRadio === radio.id);
+            if (!entry) return;
+
+            const target = entry.file;
+
             if (!target) return;
 
             const app = document.getElementById("app-content");
@@ -81,7 +65,7 @@ if (radioContainer && radios.length) {
 
             setTimeout(() => {
                 app.classList.remove("fade-out");
-                loadPage(target);
+                SPA.load(target);
             }, 300);
         });
     });

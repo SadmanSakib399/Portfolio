@@ -1,37 +1,67 @@
 // ===============================
-// SPA LIFECYCLE
+// SINGLE SOURCE OF TRUTH
 // ===============================
-window.__onSpaPageChange = function ({ page, isInitial }) {
+window.PAGE_CONFIG = {
+    portfolio: {
+        file: "portfolio.html",
+        nav: [
+            { label: "Home", href: "#home" },
+            { label: "About", href: "#about" },
+            { label: "Skills", href: "#skills" },
+            { label: "Projects", href: "#projects" }
+        ],
+        sidebarRadio: "radio-portfolio"
+    },
 
-    // ===== TOP NAV CONFIG =====
-    if (window.renderTopNav) {
+    blogs: {
+        file: "blogs.html",
+        nav: [
+            { label: "Blogs", href: "#" }
+        ],
+        sidebarRadio: "radio-blogs"
+    },
 
-        if (page === "portfolio.html") {
-            renderTopNav([
-                { label: "Home", href: "#home" },
-                { label: "About", href: "#about" },
-                { label: "Skills", href: "#skills" },
-                { label: "Projects", href: "#projects" }
-            ]);
-        }
+    gallery: {
+        file: "gallery.html",
+        nav: [
+            { label: "Gallery", href: "#" }
+        ],
+        sidebarRadio: "radio-gallery"
+    },
 
-        if (page === "blogs.html") {
-            renderTopNav([{ label: "Blogs", href: "#" }]);
-        }
-
-        if (page === "gallery.html") {
-            renderTopNav([{ label: "Gallery", href: "#" }]);
-        }
-
-        if (page === "thoughts.html") {
-            renderTopNav([{ label: "Thoughts", href: "#" }]);
-        }
+    thoughts: {
+        file: "thoughts.html",
+        nav: [
+            { label: "Thoughts", href: "#" }
+        ],
+        sidebarRadio: "radio-thoughts"
     }
-
-        // ===== SIDEBAR SYNC =====
-    if (window.syncSidebarWithPage) {
-        window.syncSidebarWithPage(page);
-    }
-
-
 };
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (!window.SPA || !window.PAGE_CONFIG) {
+        console.error("SPA or PAGE_CONFIG missing");
+        return;
+    }
+
+    SPA.onChange(({ page }) => {
+        const config = Object.values(PAGE_CONFIG).find(p => p.file === page);
+
+        if (!config) {
+            console.warn("No config for page:", page);
+            return;
+        }
+
+        // ===== NAVBAR =====
+        if (window.renderTopNav && config.nav) {
+            renderTopNav(config.nav);
+        }
+
+        // ===== SIDEBAR =====
+        if (config.sidebarRadio) {
+            const radio = document.getElementById(config.sidebarRadio);
+            if (radio) radio.checked = true;
+        }
+    });
+});

@@ -1,10 +1,27 @@
-document.body.classList.add("loaded");
+// ===============================
+// SPA CORE
+// ===============================
+window.SPA = (() => {
+    const listeners = {
+        change: []
+    };
 
-document.addEventListener("DOMContentLoaded", () => {
-    const appContent = document.getElementById("app-content");
-    if (!appContent) return;
+    let appContent = null;
 
-    async function loadPage(url, addToHistory = true) {
+    function init() {
+        document.body.classList.add("loaded");
+
+        appContent = document.getElementById("app-content");
+        if (!appContent) return;
+
+        interceptLinks();
+        handlePopState();
+        initialLoad();
+    }
+
+    async function load(url, addToHistory = true) {
+        if (!appContent) return;
+
         try {
             appContent.classList.add("page-exit");
             await new Promise(res => setTimeout(res, 300));
@@ -23,46 +40,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (addToHistory) {
                 history.pushState({}, "", "?page=" + url);
+                window.scrollTo(0, 0);
             }
-
-            if (addToHistory) window.scrollTo(0, 0);
 
             const page = url.split("/").pop();
 
-            if (window.__onSpaPageChange) {
-                window.__onSpaPageChange({
-                    page,
-                    isInitial: !addToHistory
-                });
-            }
+            notifyChange({
+                page,
+                isInitial: !addToHistory
+            });
 
         } catch (err) {
             console.error("SPA error:", err);
         }
     }
 
-    window.loadPage = loadPage;
+    function interceptLinks() {
+        document.addEventListener("click", (e) => {
+            const link = e.target.closest("a");
+            if (!link) return;
 
-    window.addEventListener("popstate", () => {
+            const href = link.getAttribute("href");
+            if (!href || href.startsWith("#") || href.startsWith("http")) return;
+
+            e.preventDefault();
+            load(href);
+        });
+    }
+
+    function handlePopState() {
+        window.addEventListener("popstate", () => {
+            const params = new URLSearchParams(window.location.search);
+            const page = params.get("page") || "portfolio.html";
+            load(page, false);
+        });
+    }
+
+    function initialLoad() {
         const params = new URLSearchParams(window.location.search);
         const page = params.get("page") || "portfolio.html";
-        loadPage(page, false);
-    });
+        load(page, false);
+    }
 
+    function onChange(fn) {
+        listeners.change.push(fn);
+    }
 
-    document.addEventListener("click", (e) => {
-        const link = e.target.closest("a");
-        if (!link) return;
+    function notifyChange(data) {
+        listeners.change.forEach(fn => fn(data));
+    }
 
-        const href = link.getAttribute("href");
-        if (!href || href.startsWith("#") || href.startsWith("http")) return;
+    return {
+        init,
+        load,
+        onChange
+    };
+})();
 
-        e.preventDefault();
-        loadPage(href);
-    });
-
-    const params = new URLSearchParams(window.location.search);
-    const page = params.get("page") || "portfolio.html";
-    loadPage(page, false);
-
-});
+// ===============================
+// INIT
+// ===============================
+document.addEventListener("DOMContentLoaded", SPA.init);
