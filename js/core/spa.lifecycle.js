@@ -38,7 +38,6 @@ window.PAGE_CONFIG = {
     }
 };
 
-
 document.addEventListener("DOMContentLoaded", () => {
     if (!window.SPA || !window.PAGE_CONFIG) {
         console.error("SPA or PAGE_CONFIG missing");
@@ -57,11 +56,19 @@ document.addEventListener("DOMContentLoaded", () => {
         if (window.NavbarRender && config.nav) {
             NavbarRender.render(config.nav);
         }
-        
+
+        if (window.NavbarController) {
+            NavbarController.refresh();
+        }
+
         // ===== SIDEBAR =====
         if (config.sidebarRadio) {
             const radio = document.getElementById(config.sidebarRadio);
             if (radio) radio.checked = true;
+        }
+
+        if (window.SidebarController) {
+            SidebarController.refresh();
         }
     });
 });

@@ -14,8 +14,9 @@ window.NavbarRender = {
             navInner.insertBefore(a, glider);
         });
 
-        if (window.initNavbar) {
-            initNavbar();
+        // Let the controller handle reinitialization
+        if (window.NavbarController) {
+            NavbarController.refresh();
         }
     }
 };
