@@ -10,7 +10,7 @@
     --bg-blur-strength: 1em;
     --bg-brightness: 5;
     --bg-dot-size: 8px;
-    --bg-z-index-overlay: 1;
+    --bg-z-index-overlay: -1;
     --bg-animation-duration: 150s;
 }
 
@@ -171,4 +171,12 @@ More comprehensive version at shenanigans.shoghisimon.ca/collection/css-rain-bg/
             250px 5082px, 253px 5082px, 401.5px 5161px,
             275px 6375px, 278px 6375px, 426.5px 6480px;
     }
+}
+
+
+.background_card {
+    padding: 15px;
+    background-color:#212121c2;
+    border-radius: 8px;
+    border: 1px solid rgba(247, 228, 121, 0.25);
 }
