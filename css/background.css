@@ -2,7 +2,8 @@
 More comprehensive version at shenanigans.shoghisimon.ca/collection/css-rain-bg/
  */
 
-.container::after {
+#background-root::after {
+    pointer-events: none;
     content: "";
     position: absolute;
     inset: 0;
@@ -15,7 +16,7 @@ More comprehensive version at shenanigans.shoghisimon.ca/collection/css-rain-bg/
     background-size: 8px 8px;
 }
 
-.container {
+#background-root {
     position: relative;
     width: 100%;
     height: 100%;
@@ -177,17 +178,4 @@ More comprehensive version at shenanigans.shoghisimon.ca/collection/css-rain-bg/
             278px 6375px,
             426.5px 6480px;
     }
-}
-
-
-
-
-
-
-#smokeCanvas {
-    position: fixed;
-    inset: 0;
-    z-index: 10;
-    pointer-events: none;
-    mix-blend-mode: screen; 
 }

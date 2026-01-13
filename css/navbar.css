@@ -1,3 +1,10 @@
+.top-nav.scrolled {
+    background-color: #212121a2;
+    border-bottom: 1px solid rgba(247, 228, 121, 0.25);
+    backdrop-filter: blur(10px);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
 /* ===== BUTTON ===== */
 .top_nav_bg {
     --color-primary: #212121a2;

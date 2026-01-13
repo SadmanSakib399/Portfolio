@@ -1,3 +1,17 @@
+#app-content {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#app-content.page-exit {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+#app-content.page-enter {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
 /* ===== RESET ===== */
 * {
     margin: 0;
@@ -23,11 +37,12 @@ body.loaded {
     opacity: 1;
 }
 
-body.fade-out {
+#app-content.fade-out {
     opacity: 0;
     transform: scale(0.96);
     filter: blur(8px);
 }
+
 
 section {
     scroll-margin-top: 90px;
