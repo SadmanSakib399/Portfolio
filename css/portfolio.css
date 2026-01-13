@@ -1,0 +1,62 @@
+:root {
+    --font-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Center section content */
+.home-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(40px, 8vw, 120px);
+}
+
+/* Image */
+.profile_img {
+    width: clamp(90px, 12vw, 200px);
+    height: auto;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 1px solid rgba(247, 228, 121, 0.25);
+}
+
+/* Right side container */
+.home-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Text block */
+.home-text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: clamp(280px, 50vw, 600px);
+}
+
+.home-title {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    margin: 0;
+    color:var(--font-color);
+}
+
+.home-desc {
+    margin: 0;
+    opacity: 0.8;
+    color: var(--font-color);
+}
+
+/* Buttons container */
+.home-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Buttons */
+.home-btn {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
