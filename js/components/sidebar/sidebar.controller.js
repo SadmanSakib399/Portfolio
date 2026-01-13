@@ -1,4 +1,4 @@
-(function () {
+window.SidebarController = (() => {
     let initialized = false;
 
     function setup() {
@@ -38,11 +38,15 @@
         setup();
     }
 
-    window.SidebarController = {
+    return {
         init,
         refresh,
         setActiveRadio
     };
-
-    document.addEventListener("DOMContentLoaded", init);
 })();
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (window.SidebarController) {
+        SidebarController.init();
+    }
+});

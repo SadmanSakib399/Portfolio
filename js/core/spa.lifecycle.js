@@ -38,13 +38,31 @@ window.PAGE_CONFIG = {
     }
 };
 
-document.addEventListener("DOMContentLoaded", () => {
-    if (!window.SPA || !window.PAGE_CONFIG) {
-        console.error("SPA or PAGE_CONFIG missing");
-        return;
+window.SPALifecycle = (() => {
+    let initialized = false;
+
+    function init() {
+        if (initialized) return;
+        initialized = true;
+
+        if (!window.SPA || !window.PAGE_CONFIG) {
+            console.error("SPA or PAGE_CONFIG missing");
+            return;
+        }
+
+        SPA.onChange(handlePageChange);
+
+        // 🔥 IMPORTANT: force initial sync
+        syncWithCurrentPage();
     }
 
-    SPA.onChange(({ page }) => {
+    function syncWithCurrentPage() {
+        const params = new URLSearchParams(window.location.search);
+        const page = params.get("page") || "portfolio.html";
+        handlePageChange({ page });
+    }
+
+    function handlePageChange({ page }) {
         const config = Object.values(PAGE_CONFIG).find(p => p.file === page);
 
         if (!config) {
@@ -66,6 +84,11 @@ document.addEventListener("DOMContentLoaded", () => {
             SidebarController.setActiveRadio(config.sidebarRadio);
             SidebarController.refresh();
         }
+    }
 
-    });
+    return { init };
+})();
+
+document.addEventListener("DOMContentLoaded", () => {
+    SPALifecycle.init();
 });

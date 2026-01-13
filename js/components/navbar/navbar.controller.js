@@ -1,35 +1,44 @@
-(function () {
+window.NavbarController = (() => {
     let initialized = false;
+
+    let navLinks = [];
+    let glider = null;
+    let navInner = null;
+    let activeLink = null;
 
     function setup() {
         const nav = document.querySelector(".top-nav");
         if (!nav) return;
 
-        const navLinks = document.querySelectorAll(".nav-inner a");
-        const glider = document.querySelector(".nav-glider");
-        const navInner = document.querySelector(".nav-inner");
+        navLinks = Array.from(document.querySelectorAll(".nav-inner a"));
+        glider = document.querySelector(".nav-glider");
+        navInner = document.querySelector(".nav-inner");
 
         if (!navLinks.length || !glider || !navInner) return;
 
-        let activeLink = document.querySelector(".nav-inner a.active");
-        if (!activeLink) {
-            activeLink = navLinks[0];
-            if (activeLink) activeLink.classList.add("active");
-        }
+        activeLink = document.querySelector(".nav-inner a.active") || navLinks[0];
+        if (activeLink) activeLink.classList.add("active");
 
         // ScrollSpy
         if (window.NavbarScrollSpy) {
             NavbarScrollSpy.init(navLinks, glider, navInner, activeLink);
         }
 
+        bindLinkEvents();
+        bindLeaveEvent();
+        moveGliderInitial();
+        bindResizeHandler();
+    }
+
+    function bindLinkEvents() {
         navLinks.forEach(link => {
-            link.addEventListener("mouseenter", () => {
+            link.onmouseenter = () => {
                 if (window.NavbarGlider) {
                     NavbarGlider.move(glider, navInner, link);
                 }
-            });
+            };
 
-            link.addEventListener("click", (e) => {
+            link.onclick = (e) => {
                 const hash = link.getAttribute("href");
                 if (!hash || !hash.startsWith("#")) return;
 
@@ -46,44 +55,52 @@
                     NavbarGlider.move(glider, navInner, activeLink);
                 }
 
-                const navOffset = nav?.offsetHeight || 80;
-                const y =
-                    target.getBoundingClientRect().top +
-                    window.pageYOffset -
-                    navOffset;
+                const navOffset = document.querySelector(".top-nav")?.offsetHeight || 80;
+                const y = target.getBoundingClientRect().top + window.pageYOffset - navOffset;
 
                 window.scrollTo({
                     top: y,
                     behavior: "smooth"
                 });
-            });
+            };
         });
+    }
 
-        navInner.addEventListener("mouseleave", () => {
-            if (window.NavbarGlider) {
+    function bindLeaveEvent() {
+        navInner.onmouseleave = () => {
+            if (window.NavbarGlider && activeLink) {
                 NavbarGlider.move(glider, navInner, activeLink);
             }
-        });
+        };
+    }
 
-        // Initial positioning
+    function moveGliderInitial() {
         setTimeout(() => {
-            if (window.NavbarGlider) {
+            if (window.NavbarGlider && activeLink) {
                 NavbarGlider.move(glider, navInner, activeLink, false);
             }
         }, 50);
+    }
 
-        // Resize handling
+    function bindResizeHandler() {
         let resizeTimeout;
-        ["resize", "orientationchange"].forEach(evt => {
-            window.addEventListener(evt, () => {
-                clearTimeout(resizeTimeout);
-                resizeTimeout = setTimeout(() => {
-                    if (window.NavbarGlider) {
-                        NavbarGlider.move(glider, navInner, activeLink, false);
-                    }
-                }, 100);
-            });
-        });
+
+        const handler = () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                if (window.NavbarGlider && activeLink) {
+                    NavbarGlider.move(glider, navInner, activeLink, false);
+                }
+            }, 100);
+        };
+
+        window.removeEventListener("resize", window.__navbarResize);
+        window.removeEventListener("orientationchange", window.__navbarResize);
+
+        window.__navbarResize = handler;
+
+        window.addEventListener("resize", window.__navbarResize);
+        window.addEventListener("orientationchange", window.__navbarResize);
     }
 
     function init() {
@@ -101,10 +118,14 @@
         setup();
     }
 
-    window.NavbarController = {
+    return {
         init,
         refresh
     };
-
-    document.addEventListener("DOMContentLoaded", init);
 })();
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (window.NavbarController) {
+        NavbarController.init();
+    }
+});

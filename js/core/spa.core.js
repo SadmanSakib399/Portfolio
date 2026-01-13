@@ -2,6 +2,10 @@
 // SPA CORE
 // ===============================
 window.SPA = (() => {
+
+    // 🔒 Navigation lock
+    let isNavigating = false;
+
     const listeners = {
         change: []
     };
@@ -20,9 +24,12 @@ window.SPA = (() => {
     }
 
     async function load(url, addToHistory = true) {
-        if (!appContent) return;
+        if (isNavigating) return;
+        isNavigating = true;
 
         try {
+            if (!appContent) return;
+
             appContent.classList.add("page-exit");
             await new Promise(res => setTimeout(res, 300));
 
@@ -52,6 +59,11 @@ window.SPA = (() => {
 
         } catch (err) {
             console.error("SPA error:", err);
+        } finally {
+            // release lock after animations settle
+            setTimeout(() => {
+                isNavigating = false;
+            }, 400);
         }
     }
 
@@ -61,7 +73,10 @@ window.SPA = (() => {
             if (!link) return;
 
             const href = link.getAttribute("href");
-            if (!href || href.startsWith("#") || href.startsWith("http")) return;
+            if (!href) return;
+
+            // ONLY intercept SPA html navigation
+            if (!href.endsWith(".html")) return;
 
             e.preventDefault();
             load(href);
