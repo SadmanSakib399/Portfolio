@@ -8,7 +8,7 @@ More comprehensive version at shenanigans.shoghisimon.ca/collection/css-rain-bg/
     position: absolute;
     inset: 0;
     z-index: 1;
-    backdrop-filter: blur(0.9em) brightness(6);
+    backdrop-filter: blur(1em) brightness(5);
     background-image: radial-gradient(circle at 50% 50%,
             #0000 0,
             #0000 2px,
