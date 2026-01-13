@@ -1,18 +1,68 @@
+/* === COLOR PALETTE (EDIT THESE) ===*/
+:root {
+    --yellow-100: #f7e479;
+
+    --gray-100: grey;
+
+    --bg-dark: #212121;
+    --white: #ffffff;
+    --black: #000000;
+}
+
+/* === GLOBAL DESIGN VARIABLES === */
+:root {
+    /* Typography */
+    --font-family-base: Arial, sans-serif;
+    --line-height-base: 1.6;
+
+    /* Backgrounds */
+    --body-bg: var(--bg-dark);
+
+    /* Transitions */
+    --transition-fast: 0.3s;
+    --transition-medium: 0.4s;
+
+    /* Page animation distances */
+    --page-exit-shift: 20px;
+    --page-enter-shift: -20px;
+    --page-scale-exit: 0.96;
+
+    /* Blur */
+    --blur-soft: 8px;
+
+    /* Section layout */
+    --section-min-height: 100vh;
+    --section-padding-y: clamp(60px, 8vw, 120px);
+    --section-padding-x: clamp(16px, 6vw, 120px);
+
+    /* Scroll offsets */
+    --scroll-margin-top: 90px;
+}
+
+/* === PAGE TRANSITIONS === */
 #app-content {
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: 
+        opacity var(--transition-fast) ease, 
+        transform var(--transition-fast) ease;
 }
 
 #app-content.page-exit {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(var(--page-exit-shift));
 }
 
 #app-content.page-enter {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(var(--page-enter-shift));
 }
 
-/* ===== RESET ===== */
+#app-content.fade-out {
+    opacity: 0;
+    transform: scale(var(--page-scale-exit));
+    filter: blur(var(--blur-soft));
+}
+
+/* === RESET === */
 * {
     margin: 0;
     padding: 0;
@@ -23,29 +73,28 @@ html {
     scroll-behavior: smooth;
 }
 
+/* === BODY === */
 body {
     opacity: 0;
-    transition: opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease;
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #212121;
-    overflow-x: hidden;
+    transition: 
+        opacity var(--transition-medium) ease, 
+        transform var(--transition-medium) ease, 
+        filter var(--transition-medium) ease;
 
+    font-family: var(--font-family-base);
+    line-height: var(--line-height-base);
+
+    background-color: var(--body-bg);
+    overflow-x: hidden;
 }
 
 body.loaded {
     opacity: 1;
 }
 
-#app-content.fade-out {
-    opacity: 0;
-    transform: scale(0.96);
-    filter: blur(8px);
-}
-
-
+/* === SECTIONS === */
 section {
-    scroll-margin-top: 90px;
-    min-height: 100vh;
-    padding: clamp(60px, 8vw, 120px) clamp(16px, 6vw, 120px);
+    scroll-margin-top: var(--scroll-margin-top);
+    min-height: var(--section-min-height);
+    padding: var(--section-padding-y) var(--section-padding-x);
 }
