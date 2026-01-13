@@ -62,13 +62,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // ===== SIDEBAR =====
-        if (config.sidebarRadio) {
-            const radio = document.getElementById(config.sidebarRadio);
-            if (radio) radio.checked = true;
-        }
-
         if (window.SidebarController) {
+            SidebarController.setActiveRadio(config.sidebarRadio);
             SidebarController.refresh();
         }
+
     });
 });

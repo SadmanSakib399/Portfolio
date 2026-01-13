@@ -19,6 +19,15 @@
         }
     }
 
+    function setActiveRadio(radioId) {
+        if (!radioId) return;
+
+        const radio = document.getElementById(radioId);
+        if (radio) {
+            radio.checked = true;
+        }
+    }
+
     function init() {
         if (initialized) return;
         initialized = true;
@@ -31,7 +40,8 @@
 
     window.SidebarController = {
         init,
-        refresh
+        refresh,
+        setActiveRadio
     };
 
     document.addEventListener("DOMContentLoaded", init);
