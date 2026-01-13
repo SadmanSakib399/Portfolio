@@ -175,8 +175,14 @@ More comprehensive version at shenanigans.shoghisimon.ca/collection/css-rain-bg/
 
 
 .background_card {
-    padding: 15px;
-    background-color:#212121c2;
     border-radius: 8px;
     border: 1px solid rgba(247, 228, 121, 0.25);
+    display: flex;
+    align-items: center;
+    padding: clamp(16px, 4vw, 48px);
+    gap: clamp(12px, 3vw, 32px);
+    border-radius: 12px;
+
+    background: rgba(0, 0, 0, 0.3); /* optional */
+    backdrop-filter: blur(10px);     /* optional */
 }

@@ -1,6 +1,6 @@
 /* === COLOR PALETTE === */
 :root {
-    --sidebar-bg: #212121a2;
+    --sidebar-bg: rgba(0, 0, 0, 0.3);
 
     --accent-main: #f7e479;
     --accent-border: rgba(247, 228, 121, 0.25);
@@ -71,6 +71,7 @@
     background-color: var(--color-primary);
     border-right: 1px solid var(--color-border);
     box-shadow: var(--shadow-soft);
+    backdrop-filter: blur(10px); 
 }
 
 #side-nav.active {
