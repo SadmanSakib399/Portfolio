@@ -38,7 +38,7 @@
 .home-title {
     font-size: clamp(1.5rem, 4vw, 3rem);
     margin: 0;
-    color:var(--font-color);
+    color: var(--font-color);
 }
 
 .home-desc {
@@ -59,4 +59,51 @@
     border-radius: 6px;
     border: none;
     cursor: pointer;
+}
+
+
+
+
+/* From Uiverse.io by Nameniok */
+.but {
+    border-radius: 8px;
+    border: 1px solid rgba(247, 228, 121, 0.25);
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #000000c0;
+    cursor: pointer;
+    color: #ede5ff;
+    transition: 0.2s;
+}
+
+.but:hover {
+    box-shadow: 0px 0px 17px -4px #f7e479;
+    border-color: rgba(247, 228, 121, 0.459);
+    color: #f7f5ff;
+    background-color: #3f3a1f3a;
+}
+
+.but:active {
+    box-shadow: 0px 0px 17px -7px #f7e479;
+    border-color: rgba(247, 228, 121, 0.25);
+    transform: scale(0.95);
+}
+
+
+@media (max-width: 768px) {
+    .background_card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .home-content {
+        align-items: center;
+        text-align: center;
+    }
+
+    .home-section {
+        padding: clamp(20px, 6vw, 60px);
+    }
 }
