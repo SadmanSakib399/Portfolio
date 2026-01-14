@@ -91,10 +91,175 @@
     transform: scale(0.95);
 }
 
+.about_card {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+/* From Uiverse.io by Xtenso */
+.filter-switch {
+    border: 2px solid rgba(247, 228, 121, 0.25);
+    border-radius: 30px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 400px;
+    overflow: hidden;
+}
+
+.filter-switch input {
+    display: none;
+}
+
+.filter-switch label {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 30px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: all 0.5s;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.filter-switch .background {
+    position: absolute;
+    width: 49%;
+    height: 38px;
+    background-color: rgb(0, 0, 0, 0.8);
+    border: 2px solid rgba(247, 228, 121, 0.25);
+    top: 4px;
+    left: 4px;
+    border-radius: 30px;
+    transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#option2:checked~.background {
+    left: 50%;
+}
+
+#option1:checked+label[for="option1"] {
+    color: #f7e479;
+    font-weight: bold;
+}
+
+#option2:checked+label[for="option2"] {
+    color: #f7e479;
+    font-weight: bold;
+}
+
+#option1:not(:checked)+label[for="option1"],
+#option2:not(:checked)+label[for="option2"] {
+    color: #7d7d7d;
+}
+
+
+
+
+
+
+.timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding-left: 40px;
+}
+
+/* The main vertical line */
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 16px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #3fa9f5;
+}
+
+/* Each row */
+.timeline-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Left side holding dot */
+.timeline-left {
+    position: relative;
+    width: 32px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Dot */
+.dot {
+    width: 32px;
+    height: 32px;
+    background: #eaf3ff;
+    border: 2px solid #3fa9f5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3fa9f5;
+    font-weight: bold;
+    z-index: 2;
+}
+
+/* Card */
+.card {
+    border: 2px solid #3fa9f5;
+    border-radius: 6px;
+    padding: 12px 16px;
+    max-width: 420px;
+    width: 100%;
+}
+
+/* Card text */
+.card h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.card p {
+    margin: 6px 0;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+.meta {
+    display: flex;
+    gap: 10px;
+}
+
+.meta span {
+    border: 2px solid #3fa9f5;
+    padding: 4px 8px;
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (max-width: 768px) {
     .background_card {
-        display: flex;
         flex-direction: column;
     }
 

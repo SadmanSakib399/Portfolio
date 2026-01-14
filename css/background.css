@@ -28,12 +28,10 @@ More comprehensive version at shenanigans.shoghisimon.ca/collection/css-rain-bg/
 
     backdrop-filter: blur(var(--bg-blur-strength)) brightness(var(--bg-brightness));
 
-    background-image: radial-gradient(
-        circle at 50% 50%,
-        #0000 0,
-        #0000 2px,
-        var(--bg-overlay-dot) 2px
-    );
+    background-image: radial-gradient(circle at 50% 50%,
+            #0000 0,
+            #0000 2px,
+            var(--bg-overlay-dot) 2px);
 
     background-size: var(--bg-dot-size) var(--bg-dot-size);
 }
@@ -179,10 +177,13 @@ More comprehensive version at shenanigans.shoghisimon.ca/collection/css-rain-bg/
     border: 1px solid rgba(247, 228, 121, 0.25);
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: clamp(16px, 4vw, 48px);
     gap: clamp(12px, 3vw, 32px);
     border-radius: 12px;
 
-    background: rgba(0, 0, 0, 0.3); /* optional */
-    backdrop-filter: blur(10px);     /* optional */
+    background: rgba(0, 0, 0, 0.3);
+    /* optional */
+    backdrop-filter: blur(10px);
+    /* optional */
 }
