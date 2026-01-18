@@ -1,50 +1,4 @@
-/* === COLOR PALETTE === */
-:root {
-    --sidebar-bg: rgba(0, 0, 0, 0.3);
-
-    --accent-main: #f7e479;
-    --accent-border: rgba(247, 228, 121, 0.25);
-    --accent-glow-soft: #f7e4791c;
-
-    --white: #ffffff;
-    --black: #000000;
-
-    --shadow-soft: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-
-    --text-muted: grey;
-}
-
-/* === SIDEBAR VARIABLES === */
-:root {
-    --sidebar-width: 120px;
-    --sidebar-padding-top: 70px;
-
-    --sidebar-z: 1000;
-    --sidebar-toggle-z: 1001;
-
-    --sidebar-transition-time: 0.3s;
-
-    --sidebar-bottom-offset: 20px;
-    --sidebar-bottom-gap: 10px;
-
-    --hamburger-size: 3em;
-
-    --hamburger-transition-time: 600ms;
-    --hamburger-transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
-
-    --radio-padding-left: 0.5rem;
-    --radio-label-padding: 1rem;
-
-    --radio-glider-width: 1px;
-    --radio-glider-blur: 10px;
-
-    --radio-glider-fade-width: 150px;
-
-    --radio-transition-time: 0.5s;
-    --radio-transition-ease: cubic-bezier(0.37, 1.95, 0.66, 0.56);
-}
-
-/* === TOGGLE BUTTON === */
+/* ===== SIDENAVBAR ===== */
 #menu-btn {
     position: fixed;
     left: 30px;
@@ -52,53 +6,35 @@
     z-index: var(--sidebar-toggle-z);
 }
 
-/* === SIDEBAR CONTAINER === */
 #side-nav {
     position: fixed;
     width: var(--sidebar-width);
     height: 100vh;
     padding-top: var(--sidebar-padding-top);
-
     transform: translateX(-100%);
     transition: transform var(--sidebar-transition-time) ease;
-
     z-index: var(--sidebar-z);
     overflow-x: hidden;
-
-    --color-primary: var(--sidebar-bg);
-    --color-border: var(--accent-border);
-
-    background-color: var(--color-primary);
-    border-right: 1px solid var(--color-border);
-    box-shadow: var(--shadow-soft);
-    backdrop-filter: blur(10px); 
+    background-color: var(--black-color-25);
+    border-right: 1px solid var(--accent-color-25);
+    backdrop-filter: blur(var(--blur)); 
+    box-shadow: var(--shadow);
 }
 
 #side-nav.active {
     transform: translateX(0);
 }
 
-/* === SIDEBAR LINKS === */
-#side-nav a {
-    display: block;
-    color: var(--white);
-    margin-bottom: 15px;
-    text-decoration: none;
-}
-
-/* === SIDEBAR BOTTOM GROUP === */
 #side-nav .bottom {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     bottom: var(--sidebar-bottom-offset);
     left: 50%;
     transform: translateX(-50%);
-
-    display: flex;
     gap: var(--sidebar-bottom-gap);
-    flex-direction: column;
-
-    justify-content: center;
-    align-items: center;
 }
 
 
@@ -118,7 +54,7 @@
 
 .line {
     fill: none;
-    stroke: var(--accent-main);
+    stroke: var(--theme-color);
     stroke-linecap: round;
     stroke-linejoin: round;
     stroke-width: 3;
@@ -143,12 +79,6 @@
 
 /* === RADIO NAV === */
 .radio-container {
-    --main-color: var(--accent-main);
-    --main-color-opacity: var(--accent-glow-soft);
-
-    /* change this according inputs count */
-    --total-radio: 4;
-
     display: flex;
     flex-direction: column;
     position: relative;
@@ -164,12 +94,12 @@
     cursor: pointer;
     padding: var(--radio-label-padding);
     position: relative;
-    color: var(--text-muted);
+    color: var(--inactive-font-color);
     transition: all 0.3s ease-in-out;
 }
 
 .radio-container input:checked+label {
-    color: var(--main-color);
+    color: var(--theme-color);
 }
 
 /* === RADIO GLIDER === */
@@ -194,7 +124,7 @@
 
     background: linear-gradient(0deg,
             rgba(0, 0, 0, 0) 0%,
-            var(--main-color) 50%,
+            var(--theme-color) 50%,
             rgba(0, 0, 0, 0) 100%);
 
     transition: transform var(--radio-transition-time) var(--radio-transition-ease);
@@ -207,7 +137,7 @@
     width: 300%;
     top: 50%;
     transform: translateY(-50%);
-    background: var(--main-color);
+    background: var(--theme-color);
     filter: blur(var(--radio-glider-blur));
 }
 
@@ -219,7 +149,7 @@
     width: var(--radio-glider-fade-width);
 
     background: linear-gradient(90deg,
-            var(--main-color-opacity) 0%,
+            var(--accent-color-10) 0%,
             rgba(0, 0, 0, 0) 100%);
 }
 

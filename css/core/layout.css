@@ -1,0 +1,19 @@
+
+body {
+
+    font-family: var(--font-family);
+    line-height: var(--line-height);
+    color: var(--font-color);
+}
+
+
+section {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: var(--section-min-height);
+    padding: var(--section-padding-y) var(--section-padding-x);
+}
+

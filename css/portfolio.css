@@ -1,112 +1,76 @@
-:root {
-    --font-color: rgba(255, 255, 255, 0.8);
-}
-
-/* Center section content */
-.home-section {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: clamp(40px, 8vw, 120px);
-}
-
-/* Image */
+/* ===== HOME SECTION ===== */
 .profile_img {
     width: clamp(90px, 12vw, 200px);
     height: auto;
     border-radius: 12px;
     object-fit: cover;
-    border: 1px solid rgba(247, 228, 121, 0.25);
+    border: 1px solid var(--accent-color-25);
 }
 
-/* Right side container */
 .home-content {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 15px;
 }
 
-/* Text block */
 .home-text {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
     max-width: clamp(280px, 50vw, 600px);
 }
 
 .home-title {
     font-size: clamp(1.5rem, 4vw, 3rem);
     margin: 0;
-    color: var(--font-color);
 }
 
-.home-desc {
+.home-paragraph {
     margin: 0;
-    opacity: 0.8;
-    color: var(--font-color);
 }
 
-/* Buttons container */
-.home-actions {
+.home-buttons {
     display: flex;
     gap: 12px;
 }
 
-/* Buttons */
-.home-btn {
-    padding: 8px 14px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-}
-
-
-
-
-/* From Uiverse.io by Nameniok */
-.but {
+/* home button style */
+.home-button {
     border-radius: 8px;
-    border: 1px solid rgba(247, 228, 121, 0.25);
+    border: 1px solid var(--accent-color-25);
     padding: 0.6em 1.2em;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
-    background-color: #000000c0;
+    background-color: var(--black-color-80);
     cursor: pointer;
-    color: #ede5ff;
+    color: var(--font-color);
     transition: 0.2s;
 }
 
-.but:hover {
-    box-shadow: 0px 0px 17px -4px #f7e479;
-    border-color: rgba(247, 228, 121, 0.459);
-    color: #f7f5ff;
-    background-color: #3f3a1f3a;
+.home-button:hover {
+    box-shadow: 0px 0px 17px -4px var(--theme-color);
+    border-color: var(--accent-color-50);
+    color: var(--theme-color);
+    background-color: var(--black-color);
 }
 
-.but:active {
-    box-shadow: 0px 0px 17px -7px #f7e479;
-    border-color: rgba(247, 228, 121, 0.25);
+.home-button:active {
+    box-shadow: 0px 0px 17px -7px var(--theme-color);
+    border-color: var(--accent-color-25);
     transform: scale(0.95);
 }
 
+
+/* ===== ABOUT SECTION ===== */
 .about_card {
     display: flex;
     flex-direction: column;
 }
 
-
-
-/* From Uiverse.io by Xtenso */
+/* filter button style */
 .filter-switch {
-    border: 2px solid rgba(247, 228, 121, 0.25);
+    border: 2px solid var(--accent-color-25);
     border-radius: 30px;
     position: relative;
     display: flex;
     align-items: center;
-    height: 50px;
-    width: 400px;
+    height: clamp(42px, 6vw, 50px);
+    width: clamp(260px, 80vw, 400px);
     overflow: hidden;
 }
 
@@ -125,39 +89,38 @@
     z-index: 1;
     transition: all 0.5s;
     font-weight: 500;
-    font-size: 18px;
+    font-size: clamp(14px, 2.5vw, 18px);
 }
 
-.filter-switch .background {
+.filter-switch .filter-background {
     position: absolute;
     width: 49%;
-    height: 38px;
-    background-color: rgb(0, 0, 0, 0.8);
-    border: 2px solid rgba(247, 228, 121, 0.25);
+    height: calc(100% - 8px);
+    background-color: var(--black-color-80);
+    border: 2px solid var(--accent-color-25);
     top: 4px;
     left: 4px;
     border-radius: 30px;
     transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-#option2:checked~.background {
+#option2:checked~.filter-background {
     left: 50%;
 }
 
 #option1:checked+label[for="option1"] {
-    color: #f7e479;
-    font-weight: bold;
+    color: var(--theme-color);
 }
 
 #option2:checked+label[for="option2"] {
-    color: #f7e479;
-    font-weight: bold;
+    color: var(--theme-color);
 }
 
 #option1:not(:checked)+label[for="option1"],
 #option2:not(:checked)+label[for="option2"] {
-    color: #7d7d7d;
+    color: var(--inactive-font-color);
 }
+
 
 
 
@@ -249,16 +212,8 @@
 
 
 
-
-
-
-
-
-
-
-
-
 @media (max-width: 768px) {
+    /* ===== HOME SECTION ===== */
     .background_card {
         flex-direction: column;
     }
@@ -268,7 +223,17 @@
         text-align: center;
     }
 
-    .home-section {
-        padding: clamp(20px, 6vw, 60px);
+    .home-title {
+        font-size: clamp(1.8rem, 4vw, 3rem);
     }
+
+    .home-text {
+        max-width: 100%;
+    }
+
+    .profile_img {
+        width: clamp(120px, 20vw, 250px);
+    }
+
+    /* ===== ABOUT SECTION ===== */
 }
