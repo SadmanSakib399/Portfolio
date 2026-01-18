@@ -1,3 +1,101 @@
 :root{
+
+    /* COLORS */
+    --theme-color: rgb(247, 228, 121);
+    --accent-color-50: rgba(247, 228, 121, 0.50);
+    --accent-color-35: rgba(247, 228, 121, 0.35);
+    --accent-color-25: rgba(247, 228, 121, 0.25);
+    --accent-color-18: rgba(247, 228, 121, 0.18);
+    --accent-color-15: rgba(247, 228, 121, 0.15);
+    --accent-color-10: rgba(247, 228, 121, 0.10);
+    --accent-color-08: rgba(247, 228, 121, 0.08);
+    --accent-color-02: rgba(247, 228, 121, 0.02);
+
+    --dark-color: #121212;
+    --light-color: #f0f0f0;
+    --grey-color: #6d6b6b;
+
+    --black-color: #000000;
+    --black-color-80: rgba(0, 0, 0, 0.8);
+    --black-color-25: rgba(0, 0, 0, 0.25);
+    --white-color: #ffffff;
+
+    --shadow: rgba(155, 153, 36, 0) 0px 7px 29px 0px;
+
+    --blur: 10px;
+
+
+    /* TYPOGRAPHY */
+    --font-color: rgb(255, 255, 255);
+    --inactive-font-color: var(--grey-color);
+
+    --font-family: Arial, sans-serif;
+    --line-height: 1.6;
+
+
+    /* BACKGROUND PATTERN */
+    --bg-overlay-dot: hsl(0 0 4%);
+    --rain-color: var(--accent-color-25);
+
+    --bg-blur-strength: 1em;
+    --bg-brightness: 5;
+    --bg-dot-size: 8px;
+    --bg-z-index-overlay: -1;
+    --bg-animation-duration: 150s;
+
+
+    /* BACKGROUND CARD */
+    --bg-card-blur: var(--blur);
+
+
+    /* SECTION */
+    --section-min-height: 100vh;
+    --section-padding-y: clamp(60px, 8vw, 120px);
+    --section-padding-x: clamp(16px, 8vw, 120px);
+
+
+    /* SIDEBAR */
+    --sidebar-z: 1000;
+    --sidebar-toggle-z: 1001;
+    --sidebar-width: 120px;
+    --sidebar-padding-top: 70px;
+    --sidebar-transition-time: 0.3s;
+    --sidebar-bottom-offset: 20px;
+    --sidebar-bottom-gap: 10px;
     
+    --hamburger-size: 3em;
+    --hamburger-transition-time: 600ms;
+    --hamburger-transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+    --radio-padding-left: 0.5rem;
+    --radio-label-padding: 1rem;
+    --radio-glider-width: 1px;
+    --radio-glider-blur: var(--blur);
+    --radio-glider-fade-width: 150px;
+    --radio-transition-time: 0.5s;
+    --radio-transition-ease: cubic-bezier(0.37, 1.95, 0.66, 0.56);
+    --total-radio: 4;
+
+
+    /* NAVBAR */
+    --nav-z: 999;
+    --nav-bg-z: 1;
+    --nav-backdrop-blur: var(--blur);
+    --nav-padding-y: 16px;
+    --nav-padding-x: 30px;
+    --nav-gap: 20px;
+    --nav-link-padding-y: 6px;
+    --nav-link-padding-x: 4px;
+    --nav-glider-height: 1.25px;
+    --nav-glider-bottom-offset: 5px;
+    --nav-glider-blur-core: 14px;
+    --nav-glider-blur-fade: 6px;
+    --nav-transition-time: 0.45s;
+    --nav-transition-ease: cubic-bezier(0.37, 1.95, 0.66, 0.56);
+
+    --nav-link-padding-mobile-x: 2px;
+    --nav-gap-mobile: 14px;
+    --nav-padding-mobile: 12px;
+
 }
+

@@ -1,71 +1,24 @@
-/* === COLOR PALETTE === */
-:root {
-    --nav-bg: rgba(0, 0, 0, 0.3);;
 
-    --accent-main: #f7e479;
-    --accent-25: rgba(247, 228, 121, 0.25);
-    --accent-35: rgba(247, 228, 121, 0.35);
-    --accent-18: rgba(247, 228, 121, 0.18);
-    --accent-15: rgba(247, 228, 121, 0.15);
-    --accent-08: rgba(247, 228, 121, 0.08);
-    --accent-02: rgba(247, 228, 121, 0.02);
-
-    --nav-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-
-    --text-muted: grey;
-}
-
-/* === NAVBAR VARIABLES === */
-:root {
-    --nav-z: 999;
-    --nav-bg-z: 1;
-
-    --nav-padding-y: 16px;
-    --nav-padding-x: 30px;
-
-    --nav-gap: 20px;
-    --nav-gap-mobile: 14px;
-
-    --nav-padding-mobile: 12px;
-
-    --nav-link-padding-y: 6px;
-    --nav-link-padding-x: 4px;
-    --nav-link-padding-mobile-x: 2px;
-
-    --nav-glider-height: 1.25px;
-    --nav-glider-bottom-offset: 6px;
-
-    --nav-glider-blur-core: 14px;
-    --nav-glider-blur-fade: 6px;
-
-    --nav-transition-time: 0.45s;
-    --nav-transition-ease: cubic-bezier(0.37, 1.95, 0.66, 0.56);
-
-    --nav-backdrop-blur: 10px;
-}
 
 /* === NAV SCROLLED STATE === */
 .top-nav.scrolled {
-    background-color: var(--nav-bg);
-    border-bottom: 1px solid var(--accent-25);
+    background-color: var(--black-color-25);
+    border-bottom: 1px solid var(--accent-color-25);
     backdrop-filter: blur(var(--nav-backdrop-blur));
-    box-shadow: var(--nav-shadow);
+    box-shadow: var(--shadow);
 }
 
 /* === NAV BACKGROUND CONTAINER === */
 .top_nav_bg {
-    --color-primary: var(--nav-bg);
-    --color-border: var(--accent-25);
-
     position: absolute;
     z-index: var(--nav-bg-z);
     justify-content: center;
     align-items: center;
 
-    background-color: var(--color-primary);
-    border-bottom: 1px solid var(--color-border);
-    box-shadow: var(--nav-shadow);
-    backdrop-filter: blur(10px); 
+    background-color: var(--black-color-25);
+    border-bottom: 1px solid var(--accent-color-25);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(var(--nav-backdrop-blur)); 
 }
 
 /* === TOP NAV === */
@@ -96,7 +49,7 @@
     position: relative;
     padding: var(--nav-link-padding-y) var(--nav-link-padding-x);
 
-    color: var(--text-muted);
+    color: var(--inactive-font-color);
     text-decoration: none;
     font-weight: 500;
 
@@ -105,13 +58,11 @@
 }
 
 .nav-inner a.active {
-    color: var(--accent-main);
+    color: var(--theme-color);
 }
 
 /* === GLOW GLIDER === */
 .nav-glider {
-    --main-color: var(--accent-main);
-
     will-change: left, width;
     position: absolute;
     bottom: var(--nav-glider-bottom-offset);
@@ -123,9 +74,9 @@
     background: linear-gradient(
         90deg,
         transparent 0%,
-        var(--accent-25) 20%,
-        var(--main-color) 50%,
-        var(--accent-25) 80%,
+        var(--accent-color-25) 20%,
+        var(--theme-color) 50%,
+        var(--accent-color-25) 80%,
         transparent 100%
     );
 
@@ -148,9 +99,9 @@
 
     background: radial-gradient(
         ellipse at center,
-        var(--main-color) 0%,
-        var(--accent-35) 30%,
-        var(--accent-15) 55%,
+        var(--theme-color) 0%,
+        var(--accent-color-35) 30%,
+        var(--accent-color-15) 55%,
         transparent 70%
     );
 
@@ -171,9 +122,9 @@
 
     background: linear-gradient(
         0deg,
-        var(--accent-18) 0%,
-        var(--accent-08) 25%,
-        var(--accent-02) 45%,
+        var(--accent-color-18) 0%,
+        var(--accent-color-08) 25%,
+        var(--accent-color-02) 45%,
         transparent 70%
     );
 
