@@ -246,18 +246,6 @@
     border-radius: 4px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 @media (max-width: 768px) {
     .background_card {
         flex-direction: column;
@@ -269,6 +257,18 @@
     }
 
     .home-section {
-        padding: clamp(20px, 6vw, 60px);
+        padding: clamp(40px, 6vw, 60px);
+    }
+
+    .home-title {
+        font-size: clamp(1.8rem, 4vw, 3rem);
+    }
+
+    .home-text {
+        max-width: 100%;
+    }
+
+    .profile_img {
+        width: clamp(120px, 20vw, 250px);
     }
 }
