@@ -84,6 +84,12 @@ window.SPALifecycle = (() => {
             SidebarController.setActiveRadio(config.sidebarRadio);
             SidebarController.refresh();
         }
+
+        // ===== ABOUT FILTER =====
+        if (window.AboutFilter) {
+            AboutFilter.init();
+        }
+
     }
 
     return { init };
