@@ -269,6 +269,18 @@
     }
 
     /* ===== ABOUT SECTION ===== */
+    .timeline::after {
+        left: 5%;
+    }
+
+    .container {
+        left: 5%;
+    }
+
+    .container .content { 
+        padding: 20px;
+    }
+
     .container .date {
         position: relative;
         top: auto;
