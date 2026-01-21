@@ -90,6 +90,12 @@ window.SPALifecycle = (() => {
             AboutFilter.init();
         }
 
+        // ===== SKILLS =====
+        if (window.initSkills) {
+            initSkills();
+        }
+
+
     }
 
     return { init };
