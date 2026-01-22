@@ -3,6 +3,7 @@ window.MouseSmoke = (() => {
     let particles = [];
     let isLeftClick = false;
     let animationId = null;
+    let isEnabled = false;
 
     const mouse = { x: 0, y: 0, vX: 0, vY: 0, lastX: 0, lastY: 0 };
 
@@ -21,6 +22,8 @@ window.MouseSmoke = (() => {
     }
 
     function onMouseMove(e) {
+        if (!isEnabled) return;
+
         const dx = e.clientX - mouse.lastX;
         const dy = e.clientY - mouse.lastY;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -106,6 +109,8 @@ window.MouseSmoke = (() => {
     }
 
     function animate() {
+        if (!isEnabled || !canvas || !ctx) return;
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         for (let i = 0; i < particles.length; i++) {
@@ -126,19 +131,46 @@ window.MouseSmoke = (() => {
 
         ctx = canvas.getContext("2d");
         resize();
+    }
+
+    function enableSmoke() {
+        if (isEnabled) return;
+        isEnabled = true;
+
+        if (!canvas) {
+            init();
+            if (!canvas) return;
+        }
+
+        canvas.style.display = "block";
+        resize();
 
         window.addEventListener("resize", resize);
         window.addEventListener("mousedown", onMouseDown);
         window.addEventListener("mouseup", onMouseUp);
         document.addEventListener("mousemove", onMouseMove);
 
-        animate();
+        if (animationId === null) {
+            animate();
+        }
     }
 
-    function destroy() {
-        cancelAnimationFrame(animationId);
-        animationId = null;
+    function disableSmoke() {
+        if (!isEnabled) return;
+        isEnabled = false;
+
+        if (animationId !== null) {
+            cancelAnimationFrame(animationId);
+            animationId = null;
+        }
+
         particles = [];
+        isLeftClick = false;
+
+        if (canvas) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            canvas.style.display = "none";
+        }
 
         window.removeEventListener("resize", resize);
         window.removeEventListener("mousedown", onMouseDown);
@@ -146,11 +178,20 @@ window.MouseSmoke = (() => {
         document.removeEventListener("mousemove", onMouseMove);
     }
 
-    return { init, destroy };
-})();
-
-document.addEventListener("DOMContentLoaded", () => {
-    if (window.MouseSmoke) {
-        MouseSmoke.init();
+    function destroy() {
+        disableSmoke();
     }
-});
+
+    // Initialize canvas setup (but don't start animation)
+    document.addEventListener("DOMContentLoaded", () => {
+        if (window.MouseSmoke) {
+            init();
+            // Start with smoke disabled
+            if (canvas) {
+                canvas.style.display = "none";
+            }
+        }
+    });
+
+    return { init, enableSmoke, disableSmoke, destroy };
+})();

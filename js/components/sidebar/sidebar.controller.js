@@ -1,5 +1,6 @@
 window.SidebarController = (() => {
     let initialized = false;
+    let smokeToggleSetup = false;
 
     function setup() {
         if (window.SidebarToggle) {
@@ -17,6 +18,30 @@ window.SidebarController = (() => {
         if (window.SidebarGlider) {
             SidebarGlider.init();
         }
+
+        setupSmokeToggle();
+    }
+
+    function setupSmokeToggle() {
+        if (smokeToggleSetup) return;
+
+        const smokeToggle = document.getElementById("mouse-trail-toggle");
+        if (!smokeToggle) return;
+
+        smokeToggleSetup = true;
+
+        // Set initial state to OFF
+        smokeToggle.checked = false;
+
+        smokeToggle.addEventListener("change", () => {
+            if (window.MouseSmoke) {
+                if (smokeToggle.checked) {
+                    MouseSmoke.enableSmoke();
+                } else {
+                    MouseSmoke.disableSmoke();
+                }
+            }
+        });
     }
 
     function setActiveRadio(radioId) {
