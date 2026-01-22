@@ -4,13 +4,22 @@ window.MouseSmoke = (() => {
     let isLeftClick = false;
     let animationId = null;
     let isEnabled = false;
+    let lastWidth = 0;
+    let lastHeight = 0;
 
     const mouse = { x: 0, y: 0, vX: 0, vY: 0, lastX: 0, lastY: 0 };
 
     function resize() {
         if (!canvas) return;
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        const newWidth = window.innerWidth;
+        const newHeight = window.innerHeight;
+        // Only update if dimensions actually changed
+        if (newWidth !== lastWidth || newHeight !== lastHeight) {
+            canvas.width = newWidth;
+            canvas.height = newHeight;
+            lastWidth = newWidth;
+            lastHeight = newHeight;
+        }
     }
 
     function onMouseDown(e) {
@@ -26,6 +35,10 @@ window.MouseSmoke = (() => {
 
         const dx = e.clientX - mouse.lastX;
         const dy = e.clientY - mouse.lastY;
+
+        // Early return if no movement (prevents redundant calculations)
+        if (dx === 0 && dy === 0) return;
+
         const distance = Math.sqrt(dx * dx + dy * dy);
 
         mouse.x = e.clientX;
@@ -70,8 +83,9 @@ window.MouseSmoke = (() => {
         update() {
             const dx = mouse.x - this.x;
             const dy = mouse.y - this.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 120) {
+            // Use squared distance comparison (avoids Math.sqrt)
+            const distSq = dx * dx + dy * dy;
+            if (distSq < 14400) { // 120 * 120 = 14400
                 this.vX += mouse.vX * 0.015;
                 this.vY += mouse.vY * 0.015;
             }
@@ -109,20 +123,29 @@ window.MouseSmoke = (() => {
     }
 
     function animate() {
-        if (!isEnabled || !canvas || !ctx) return;
+        // Guard: stop immediately if disabled or canvas missing
+        if (!isEnabled || !canvas || !ctx) {
+            animationId = null;
+            return;
+        }
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        for (let i = 0; i < particles.length; i++) {
+        // Iterate backwards for efficient dead particle removal
+        for (let i = particles.length - 1; i >= 0; i--) {
             particles[i].update();
             particles[i].draw();
             if (particles[i].life <= 0) {
                 particles.splice(i, 1);
-                i--;
             }
         }
 
-        animationId = requestAnimationFrame(animate);
+        // Continue animation loop only if still enabled
+        if (isEnabled) {
+            animationId = requestAnimationFrame(animate);
+        } else {
+            animationId = null;
+        }
     }
 
     function init() {
@@ -130,10 +153,13 @@ window.MouseSmoke = (() => {
         if (!canvas) return;
 
         ctx = canvas.getContext("2d");
+        lastWidth = 0;
+        lastHeight = 0;
         resize();
     }
 
     function enableSmoke() {
+        // Guard: prevent duplicate enable or multiple animation loops
         if (isEnabled) return;
         isEnabled = true;
 
@@ -145,33 +171,41 @@ window.MouseSmoke = (() => {
         canvas.style.display = "block";
         resize();
 
+        // Attach event listeners (safe because isEnabled guard prevents duplicates)
         window.addEventListener("resize", resize);
         window.addEventListener("mousedown", onMouseDown);
         window.addEventListener("mouseup", onMouseUp);
         document.addEventListener("mousemove", onMouseMove);
 
+        // Start animation loop (only if not already running)
         if (animationId === null) {
             animate();
         }
     }
 
     function disableSmoke() {
-        if (!isEnabled) return;
+        // Idempotent: safe to call multiple times
+        if (!isEnabled && animationId === null) return;
+
         isEnabled = false;
 
+        // Stop animation loop immediately
         if (animationId !== null) {
             cancelAnimationFrame(animationId);
             animationId = null;
         }
 
+        // Clear all particles and reset state
         particles = [];
         isLeftClick = false;
 
-        if (canvas) {
+        // Clear canvas and hide it
+        if (canvas && ctx) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             canvas.style.display = "none";
         }
 
+        // Remove all event listeners (idempotent - safe if already removed)
         window.removeEventListener("resize", resize);
         window.removeEventListener("mousedown", onMouseDown);
         window.removeEventListener("mouseup", onMouseUp);
@@ -186,10 +220,8 @@ window.MouseSmoke = (() => {
     document.addEventListener("DOMContentLoaded", () => {
         if (window.MouseSmoke) {
             init();
-            // Start with smoke disabled
-            if (canvas) {
-                canvas.style.display = "none";
-            }
+            // Explicitly disable smoke on page load (guarantees OFF state)
+            disableSmoke();
         }
     });
 

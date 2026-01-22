@@ -30,6 +30,11 @@ window.SidebarController = (() => {
 
         smokeToggleSetup = true;
 
+        // Force smoke OFF before setting up listener (handles refresh/hot reload)
+        if (window.MouseSmoke) {
+            MouseSmoke.disableSmoke();
+        }
+
         // Set initial state to OFF
         smokeToggle.checked = false;
 
