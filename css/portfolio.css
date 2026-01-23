@@ -276,7 +276,11 @@
 }
 
 .project-card {
+<<<<<<< HEAD
+    flex: 0 1 clamp(200px, 30vw, 300px);
+=======
     min-height: clamp(200px, 30vw, 300px);
+>>>>>>> 1da61fd823698a9b0074f0001f92e7a1985632a0
     aspect-ratio: 3 / 4;
     background-color: var(--black-color-80);
     border: 1px solid var(--accent-color-25);
@@ -295,6 +299,8 @@
     margin-top: 10px;
 }
 
+<<<<<<< HEAD
+=======
 /* ===== PROJECTS LISTING PAGE ===== */
 .projects-listing-card {
     flex-direction: column;
@@ -344,6 +350,7 @@
     display: inline-block;
 }
 
+>>>>>>> 1da61fd823698a9b0074f0001f92e7a1985632a0
 /* Each row */
 .skill-row {
     display: grid;
@@ -464,6 +471,8 @@
         max-width: 300px;
         width: 100%;
     }
+<<<<<<< HEAD
+=======
 
     /* ===== PROJECTS LISTING PAGE ===== */
     .projects-listing-grid {
@@ -498,4 +507,5 @@
     .projects-listing-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+>>>>>>> 1da61fd823698a9b0074f0001f92e7a1985632a0
 }

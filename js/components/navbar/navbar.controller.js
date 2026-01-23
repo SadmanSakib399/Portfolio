@@ -39,10 +39,19 @@ window.NavbarController = (() => {
             };
 
             link.onclick = (e) => {
-                const hash = link.getAttribute("href");
-                if (!hash || !hash.startsWith("#")) return;
+                const href = link.getAttribute("href");
+                if (!href) return;
 
-                const target = document.querySelector(hash);
+                // If link points to portfolio.html with hash (from Projects page), let SPA handle it
+                if (href.startsWith("portfolio.html#")) {
+                    // SPA will handle navigation, hash scroll happens after load
+                    return;
+                }
+
+                // Existing behavior for hash-only links (same page)
+                if (!href.startsWith("#")) return;
+
+                const target = document.querySelector(href);
                 if (!target) return;
 
                 e.preventDefault();
