@@ -30,15 +30,10 @@ window.SPA = (() => {
         try {
             if (!appContent) return;
 
-            // Extract hash from URL if present
-            const urlParts = url.split("#");
-            const pageUrl = urlParts[0];
-            const hash = urlParts[1] ? "#" + urlParts[1] : null;
-
             appContent.classList.add("page-exit");
             await new Promise(res => setTimeout(res, 300));
 
-            const res = await fetch(pageUrl);
+            const res = await fetch(url);
             const html = await res.text();
 
             appContent.innerHTML = html;
@@ -48,32 +43,14 @@ window.SPA = (() => {
 
             setTimeout(() => {
                 appContent.classList.remove("page-enter");
-                
-                // Scroll to hash after page transition completes
-                if (hash) {
-                    requestAnimationFrame(() => {
-                        const target = document.querySelector(hash);
-                        if (target) {
-                            const navOffset = document.querySelector(".top-nav")?.offsetHeight || 80;
-                            const y = target.getBoundingClientRect().top + window.pageYOffset - navOffset;
-                            window.scrollTo({
-                                top: y,
-                                behavior: "smooth"
-                            });
-                        }
-                    });
-                }
             }, 300);
 
             if (addToHistory) {
-                const newUrl = hash ? `?page=${pageUrl}${hash}` : `?page=${pageUrl}`;
-                history.pushState({}, "", newUrl);
-                if (!hash) {
-                    window.scrollTo(0, 0);
-                }
+                history.pushState({}, "", "?page=" + url);
+                window.scrollTo(0, 0);
             }
 
-            const page = pageUrl.split("/").pop();
+            const page = url.split("/").pop();
 
             notifyChange({
                 page,
@@ -117,9 +94,7 @@ window.SPA = (() => {
     function initialLoad() {
         const params = new URLSearchParams(window.location.search);
         const page = params.get("page") || "portfolio.html";
-        const hash = window.location.hash;
-        const urlWithHash = hash ? `${page}${hash}` : page;
-        load(urlWithHash, false);
+        load(page, false);
     }
 
     function onChange(fn) {
