@@ -39,10 +39,19 @@ window.NavbarController = (() => {
             };
 
             link.onclick = (e) => {
-                const hash = link.getAttribute("href");
-                if (!hash || !hash.startsWith("#")) return;
+                const href = link.getAttribute("href");
+                if (!href) return;
 
-                const target = document.querySelector(hash);
+                // If link points to portfolio.html with hash (from Projects page), let SPA handle it
+                if (href.startsWith("portfolio.html#")) {
+                    // SPA will handle navigation, hash scroll happens after load
+                    return;
+                }
+
+                // Existing behavior for hash-only links (same page)
+                if (!href.startsWith("#")) return;
+
+                const target = document.querySelector(href);
                 if (!target) return;
 
                 e.preventDefault();
@@ -118,9 +127,38 @@ window.NavbarController = (() => {
         setup();
     }
 
+    function setActiveLink(link) {
+        if (!link) return;
+        
+        // Ensure we have current references
+        if (!navInner) navInner = document.querySelector(".nav-inner");
+        if (!glider) glider = document.querySelector(".nav-glider");
+        if (!navLinks.length && navInner) {
+            navLinks = Array.from(navInner.querySelectorAll("a"));
+        }
+        
+        // Update internal state
+        activeLink = link;
+        
+        // Update active class
+        navLinks.forEach(l => l.classList.remove("active"));
+        link.classList.add("active");
+        
+        // Move glider to active link
+        if (window.NavbarGlider && glider && navInner) {
+            NavbarGlider.move(glider, navInner, activeLink, false);
+        }
+        
+        // Update ScrollSpy if it exists
+        if (window.NavbarScrollSpy && navLinks.length && glider && navInner) {
+            NavbarScrollSpy.init(navLinks, glider, navInner, activeLink);
+        }
+    }
+
     return {
         init,
-        refresh
+        refresh,
+        setActiveLink
     };
 })();
 

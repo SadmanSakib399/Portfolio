@@ -35,6 +35,18 @@ window.PAGE_CONFIG = {
             { label: "Thoughts", href: "#" }
         ],
         sidebarRadio: "radio-thoughts"
+    },
+
+    projects: {
+        file: "projects.html",
+        nav: [
+            { label: "Home", href: "portfolio.html#home" },
+            { label: "About", href: "portfolio.html#about" },
+            { label: "Skills", href: "portfolio.html#skills" },
+            { label: "Projects", href: "portfolio.html#projects" }
+        ],
+        sidebarRadio: "radio-portfolio",
+        initialActiveNav: "#projects"
     }
 };
 
@@ -77,6 +89,16 @@ window.SPALifecycle = (() => {
 
         if (window.NavbarController) {
             NavbarController.refresh();
+            
+            // Set initial active link if specified (for pages like projects.html)
+            if (config.initialActiveNav) {
+                setTimeout(() => {
+                    const activeLink = document.querySelector(`.nav-inner a[href="${config.initialActiveNav}"]`);
+                    if (activeLink && window.NavbarController) {
+                        NavbarController.setActiveLink(activeLink);
+                    }
+                }, 150);
+            }
         }
 
         // ===== SIDEBAR =====

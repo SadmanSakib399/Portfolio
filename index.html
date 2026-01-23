@@ -117,6 +117,114 @@
     <script src="js/core/spa.core.js"></script>
     <script src="js/core/spa.lifecycle.js"></script>
 
+    <!-- Hash-based scroll on page load - prevents browser auto-jump -->
+    <script>
+        (function() {
+            let pendingHash = null;
+            let scrollHandled = false;
+
+            // Capture and clear hash immediately to prevent browser jump
+            function captureHash() {
+                const hash = window.location.hash;
+                if (hash) {
+                    pendingHash = hash;
+                    // Clear hash from URL to prevent browser auto-scroll
+                    const url = window.location.href.split("#")[0];
+                    history.replaceState(null, "", url);
+                }
+            }
+
+            // Scroll to target after all initialization
+            function scrollToHash() {
+                if (!pendingHash || scrollHandled) return;
+
+                const attemptScroll = () => {
+                    const target = document.querySelector(pendingHash);
+                    if (target) {
+                        scrollHandled = true;
+                        const navOffset = document.querySelector(".top-nav")?.offsetHeight || 80;
+                        const y = target.getBoundingClientRect().top + window.pageYOffset - navOffset;
+                        window.scrollTo({
+                            top: y,
+                            behavior: "smooth"
+                        });
+                        // Restore hash in URL after scroll starts
+                        const currentUrl = window.location.href;
+                        const urlWithoutHash = currentUrl.split("#")[0];
+                        history.replaceState(null, "", urlWithoutHash + pendingHash);
+                        return true;
+                    }
+                    return false;
+                };
+
+                // Wait for SPA content to be ready
+                if (attemptScroll()) return;
+
+                // If not found, wait for next frame (SPA might still be loading)
+                requestAnimationFrame(() => {
+                    if (!attemptScroll()) {
+                        requestAnimationFrame(attemptScroll);
+                    }
+                });
+            }
+
+            // Capture hash immediately (before DOMContentLoaded)
+            captureHash();
+
+            // Scroll after all initialization completes
+            function waitForSPAAndScroll() {
+                const appContent = document.getElementById("app-content");
+                if (appContent && appContent.children.length > 0) {
+                    // SPA content is loaded, wait for page-enter animation to complete
+                    if (appContent.classList.contains("page-enter")) {
+                        const observer = new MutationObserver(() => {
+                            if (!appContent.classList.contains("page-enter")) {
+                                observer.disconnect();
+                                requestAnimationFrame(() => {
+                                    scrollToHash();
+                                });
+                            }
+                        });
+                        observer.observe(appContent, { attributes: true, attributeFilter: ["class"] });
+                    } else {
+                        // Page already loaded, scroll immediately
+                        requestAnimationFrame(() => {
+                            scrollToHash();
+                        });
+                    }
+                } else {
+                    // SPA not ready yet, wait and retry
+                    requestAnimationFrame(waitForSPAAndScroll);
+                }
+            }
+
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", () => {
+                    waitForSPAAndScroll();
+                });
+            } else {
+                waitForSPAAndScroll();
+            }
+
+            // Handle hash changes (for in-page navigation after initial load)
+            window.addEventListener("hashchange", () => {
+                if (scrollHandled) {
+                    const hash = window.location.hash;
+                    if (hash) {
+                        const target = document.querySelector(hash);
+                        if (target) {
+                            const navOffset = document.querySelector(".top-nav")?.offsetHeight || 80;
+                            const y = target.getBoundingClientRect().top + window.pageYOffset - navOffset;
+                            window.scrollTo({
+                                top: y,
+                                behavior: "smooth"
+                            });
+                        }
+                    }
+                }
+            });
+        })();
+    </script>
 
 </body>
 
