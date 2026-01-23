@@ -251,6 +251,50 @@
     color: var(--theme-color);
 }
 
+
+/* ===== PROJECTS SECTION ===== */
+.projects-card {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 30px;
+}
+
+.projects-title {
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    font-size: 2rem;
+    color: var(--theme-color);
+}
+
+.projects-grid {
+    display: flex;
+    gap: clamp(16px, 4vw, 32px);
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
+.project-card {
+    flex: 0 1 clamp(200px, 30vw, 300px);
+    aspect-ratio: 3 / 4;
+    background-color: var(--black-color-80);
+    border: 1px solid var(--accent-color-25);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--font-color);
+    text-align: center;
+}
+
+.projects-button-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
 /* Each row */
 .skill-row {
     display: grid;
@@ -358,5 +402,17 @@
 
     .skill-tags-wrap {
         justify-content: center; /* center the tags too */
+    }
+
+    /* ===== PROJECTS SECTION ===== */
+    .projects-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .project-card {
+        flex: 0 1 100%;
+        max-width: 300px;
+        width: 100%;
     }
 }
