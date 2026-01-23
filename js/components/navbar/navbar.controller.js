@@ -118,9 +118,38 @@ window.NavbarController = (() => {
         setup();
     }
 
+    function setActiveLink(link) {
+        if (!link) return;
+        
+        // Ensure we have current references
+        if (!navInner) navInner = document.querySelector(".nav-inner");
+        if (!glider) glider = document.querySelector(".nav-glider");
+        if (!navLinks.length && navInner) {
+            navLinks = Array.from(navInner.querySelectorAll("a"));
+        }
+        
+        // Update internal state
+        activeLink = link;
+        
+        // Update active class
+        navLinks.forEach(l => l.classList.remove("active"));
+        link.classList.add("active");
+        
+        // Move glider to active link
+        if (window.NavbarGlider && glider && navInner) {
+            NavbarGlider.move(glider, navInner, activeLink, false);
+        }
+        
+        // Update ScrollSpy if it exists
+        if (window.NavbarScrollSpy && navLinks.length && glider && navInner) {
+            NavbarScrollSpy.init(navLinks, glider, navInner, activeLink);
+        }
+    }
+
     return {
         init,
-        refresh
+        refresh,
+        setActiveLink
     };
 })();
 
