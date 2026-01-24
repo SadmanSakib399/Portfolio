@@ -234,8 +234,6 @@
 
 
 
-
-
 /* Base tag style */
 .skills-card {
     flex-direction: column;
@@ -249,99 +247,6 @@
     margin: 0;
     font-size: 2rem;
     color: var(--theme-color);
-}
-
-
-/* ===== PROJECTS SECTION ===== */
-.projects-card {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 30px;
-}
-
-.projects-title {
-    text-align: center;
-    width: 100%;
-    margin: 0;
-    font-size: 2rem;
-    color: var(--theme-color);
-}
-
-.projects-grid {
-    display: flex;
-    gap: clamp(16px, 4vw, 32px);
-    justify-content: center;
-    align-items: stretch;
-    flex-wrap: wrap;
-}
-
-.project-card {
-    min-height: clamp(200px, 30vw, 300px);
-    aspect-ratio: 3 / 4;
-    background-color: var(--black-color-80);
-    border: 1px solid var(--accent-color-25);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--font-color);
-    text-align: center;
-}
-
-.projects-button-wrapper {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 10px;
-}
-
-/* ===== PROJECTS LISTING PAGE ===== */
-.projects-listing-card {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 30px;
-}
-
-.projects-search-wrapper {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-.projects-search-input {
-    width: 100%;
-    max-width: clamp(280px, 60vw, 600px);
-    padding: 0.8em 1.2em;
-    border-radius: 8px;
-    border: 1px solid var(--accent-color-25);
-    background-color: var(--black-color-80);
-    color: var(--font-color);
-    font-family: var(--font-family);
-    font-size: 1rem;
-    transition: 0.2s;
-}
-
-.projects-search-input:focus {
-    outline: none;
-    border-color: var(--accent-color-50);
-    box-shadow: 0px 0px 17px -4px var(--theme-color);
-}
-
-.projects-search-input::placeholder {
-    color: var(--inactive-font-color);
-}
-
-.projects-listing-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: clamp(16px, 4vw, 32px);
-    width: 100%;
-}
-
-/* Make button link look like button */
-.projects-button-wrapper .home-button {
-    text-decoration: none;
-    display: inline-block;
 }
 
 /* Each row */
@@ -392,6 +297,90 @@
 }
 
 
+/* ===== PROJECTS SECTION ===== */
+.projects-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    
+}
+
+.projects-title {
+    text-align: center;
+    width: 100%;
+    margin: 0;
+    font-size: 2rem;
+    color: var(--theme-color);
+}
+
+.projects-grid {
+    display: flex;
+    justify-content: center;
+    gap: clamp(16px, 3vw, 40px);
+    flex-wrap: wrap;
+}
+
+.all-projects-grid {
+    display: flex;
+    justify-content: center;
+    gap: clamp(16px, 3vw, 40px);
+    flex-wrap: wrap;
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid var(--accent-color-25);
+    border-radius: 12px;
+    background: var(--black-color-80);
+    padding: 20px;
+    width: auto;
+    gap: 10px;
+}
+
+.project-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--accent-color-25);
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-title {
+    margin: 0;
+}
+
+/* ===== DESCRIPTION ===== */
+.project-description {
+    margin: 0;
+    height: 10%;
+    overflow: hidden;
+}
+
+/* ===== TAGS ===== */
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+
+.project-tags .skill-tag {
+    font-size: 12px;
+}
+
+.project-btn {
+    width: 90%;
+    text-align: center;
+}
 
 
 @media (max-width: 768px) {

@@ -42,10 +42,43 @@ window.NavbarController = (() => {
                 const hash = link.getAttribute("href");
                 if (!hash || !hash.startsWith("#")) return;
 
+                e.preventDefault();
+
+                // 🔥 Detect current SPA page
+                const params = new URLSearchParams(window.location.search);
+                const currentPage = params.get("page") || "portfolio.html";
+
+                // ✅ SPECIAL CASE: projects page → redirect to portfolio sections
+                if (currentPage === "projects.html") {
+                    SPA.load("portfolio.html");
+
+                    // Wait for SPA to inject portfolio.html
+                    SPA.onChange(({ page }) => {
+                        if (page !== "portfolio.html") return;
+
+                        const target = document.querySelector(hash);
+                        if (!target) return;
+
+                        const navOffset =
+                            document.querySelector(".top-nav")?.offsetHeight || 80;
+
+                        const y =
+                            target.getBoundingClientRect().top +
+                            window.pageYOffset -
+                            navOffset;
+
+                        window.scrollTo({
+                            top: y,
+                            behavior: "smooth"
+                        });
+                    });
+
+                    return;
+                }
+
+                // ✅ NORMAL behavior (portfolio page)
                 const target = document.querySelector(hash);
                 if (!target) return;
-
-                e.preventDefault();
 
                 navLinks.forEach(l => l.classList.remove("active"));
                 link.classList.add("active");
@@ -63,6 +96,7 @@ window.NavbarController = (() => {
                     behavior: "smooth"
                 });
             };
+
         });
     }
 
@@ -120,26 +154,26 @@ window.NavbarController = (() => {
 
     function setActiveLink(link) {
         if (!link) return;
-        
+
         // Ensure we have current references
         if (!navInner) navInner = document.querySelector(".nav-inner");
         if (!glider) glider = document.querySelector(".nav-glider");
         if (!navLinks.length && navInner) {
             navLinks = Array.from(navInner.querySelectorAll("a"));
         }
-        
+
         // Update internal state
         activeLink = link;
-        
+
         // Update active class
         navLinks.forEach(l => l.classList.remove("active"));
         link.classList.add("active");
-        
+
         // Move glider to active link
         if (window.NavbarGlider && glider && navInner) {
             NavbarGlider.move(glider, navInner, activeLink, false);
         }
-        
+
         // Update ScrollSpy if it exists
         if (window.NavbarScrollSpy && navLinks.length && glider && navInner) {
             NavbarScrollSpy.init(navLinks, glider, navInner, activeLink);

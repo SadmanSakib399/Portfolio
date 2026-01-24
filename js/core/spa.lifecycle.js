@@ -89,7 +89,7 @@ window.SPALifecycle = (() => {
 
         if (window.NavbarController) {
             NavbarController.refresh();
-            
+
             // Set initial active link if specified (for pages like projects.html)
             if (config.initialActiveNav) {
                 setTimeout(() => {
@@ -116,6 +116,16 @@ window.SPALifecycle = (() => {
         if (window.initSkills) {
             initSkills();
         }
+
+        // ===== PROJECTS =====
+        if (page === "portfolio.html" && window.renderProjectsPreview) {
+            renderProjectsPreview();
+        }
+
+        if (page === "projects.html" && window.renderProjectsListing) {
+            renderProjectsListing();
+        }
+
 
 
     }
