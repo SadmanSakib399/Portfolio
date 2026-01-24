@@ -20,6 +20,7 @@
 .home-title {
     font-size: clamp(1.5rem, 4vw, 3rem);
     margin: 0;
+    color: var(--theme-color);
 }
 
 .home-paragraph {
